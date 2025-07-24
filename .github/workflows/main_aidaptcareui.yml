@@ -29,9 +29,6 @@ jobs:
       - name: Build React app
         run: npm run build
  
-      - name: Show build output
-        run: ls -la build
- 
       - name: Zip build folder contents
         run: |
           cd build
