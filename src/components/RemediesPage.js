@@ -1,4 +1,5 @@
 import React from "react";
+import DoctorList from "./DoctorList";
 import { useParams, useNavigate } from "react-router-dom";
 const remediesData = {
  Diabetes: [
@@ -18,16 +19,16 @@ const remediesData = {
  ],
 };
 const RemediesPage = () => {
- const { disease } = useParams();
- const navigate = useNavigate();
- const remedies = remediesData[disease] || [];
-const [showChat, setShowChat] = React.useState(false);
+  const { disease } = useParams();
+  const navigate = useNavigate();
+  const remedies = remediesData[disease] || [];
+  const [showChat, setShowChat] = React.useState(false);
+  const [showDoctors, setShowDoctors] = React.useState(false);
+  const [chatMessages, setChatMessages] = React.useState([]);
+  const [chatInput, setChatInput] = React.useState("");
 
-const [chatMessages, setChatMessages] = React.useState([]);
-const [chatInput, setChatInput] = React.useState("");
-
-return (
-  <div className="page-container" style={{ maxWidth: "700px", margin: "2rem auto" }}>
+  return (
+    <div className="page-container" style={{ maxWidth: "700px", margin: "2rem auto" }}>
     <button
       onClick={() => navigate(-1)}
       style={{
@@ -86,6 +87,7 @@ return (
           fontSize: "1rem",
           boxShadow: "0 4px 10px rgba(67, 160, 71, 0.2)",
         }}
+        onClick={() => setShowDoctors(true)}
       >
         Consult a Doctor
       </button>
@@ -106,6 +108,7 @@ return (
         Live Chat
       </button>
     </div>
+    {showDoctors && <DoctorList onClose={() => setShowDoctors(false)} />}
     {showChat && (
       <div
         style={{
