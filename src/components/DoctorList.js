@@ -8,24 +8,37 @@ const doctors = [
   { name: "Dr. Sunil Patel", specialty: "General Physician", experience: 8, contact: "sunil.patel@hospital.com" },
 ];
 
-const availableSlots = {
+const today = new Date();
+const formatDate = (date) => date.toISOString().slice(0, 10);
+
+const availableSlotsRaw = {
     "Dr. Asha Mehta": [
-        { date: "2024-06-20", times: ["10:00", "11:00", "15:00"] },
-        { date: "2024-06-21", times: ["09:00", "13:00"] },
+        { offset: 1, times: ["10:00", "11:00", "15:00"] },
+        { offset: 2, times: ["09:00", "13:00"] },
     ],
     "Dr. Rajiv Kumar": [
-        { date: "2024-06-20", times: ["12:00", "16:00"] },
-        { date: "2024-06-22", times: ["10:30", "14:00"] },
+        { offset: 1, times: ["12:00", "16:00"] },
+        { offset: 3, times: ["10:30", "14:00"] },
     ],
     "Dr. Priya Singh": [
-        { date: "2024-06-21", times: ["11:00", "12:30"] },
-        { date: "2024-06-23", times: ["09:30", "15:30"] },
+        { offset: 2, times: ["11:00", "12:30"] },
+        { offset: 4, times: ["09:30", "15:30"] },
     ],
     "Dr. Sunil Patel": [
-        { date: "2024-06-20", times: ["10:00", "13:00"] },
-        { date: "2024-06-22", times: ["11:00", "16:00"] },
+        { offset: 1, times: ["10:00", "13:00"] },
+        { offset: 3, times: ["11:00", "16:00"] },
     ],
 };
+
+const availableSlots = Object.fromEntries(
+    Object.entries(availableSlotsRaw).map(([doctor, slots]) => [
+        doctor,
+        slots.map(slot => ({
+            date: formatDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + slot.offset)),
+            times: slot.times,
+        })),
+    ])
+);
 
 const CalendarModal = ({ doctor, onClose, onSelect }) => {
     const slots = availableSlots[doctor.name] || [];
