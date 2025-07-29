@@ -63,6 +63,7 @@ function App() {
 
         />
 <Route path="/register" element={<RegisterPage />} />
+<Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
 <Route path="/remedies/:disease" element={<RemediesPage />} />
 </Routes>
 </Router>

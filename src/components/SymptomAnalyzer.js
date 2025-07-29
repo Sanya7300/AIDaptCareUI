@@ -5,72 +5,107 @@ const symptomsList = [
  "fatigue", "frequent urination", "blurred vision", "weight loss",
  "swelling", "shortness of breath", "dizziness", "high BP", "headache"
 ];
-const diseaseMapping = {
- Diabetes: ["fatigue", "frequent urination", "blurred vision"],
- Hypertension: ["high BP", "headache", "dizziness"],
- "Kidney Disorder": ["swelling", "shortness of breath", "fatigue"]
-};
 const SymptomAnalyzer = ({ user, onLogout }) => {
  const [selected, setSelected] = useState([]);
  const [predicted, setPredicted] = useState("");
  const [history, setHistory] = useState([]);
- const [warning, setWarning] = useState("");  // <-- New state for warning
+ const [warning, setWarning] = useState("");
  const navigate = useNavigate();
  useEffect(() => {
-   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-   if (currentUser?.history) {
-     setHistory(currentUser.history.slice(-5));
-   }
+   const fetchHistory = async () => {
+     const username = localStorage.getItem("username");
+     const token = localStorage.getItem("token");
+     try {
+       const response = await fetch(`https://aidaptcareapi.azurewebsites.net/api/symptom/history/${username}`, {
+         headers: {
+           Authorization: `Bearer ${token}`
+         }
+       });
+       if (!response.ok) throw new Error("Failed to fetch history");
+       const data = await response.json();
+       setHistory(data.slice(-5));
+     } catch (error) {
+       console.error("Error fetching history:", error);
+     }
+   };
+   fetchHistory();
  }, []);
  const handleCheck = (symptom) => {
    setSelected((prev) =>
      prev.includes(symptom) ? prev.filter((s) => s !== symptom) : [...prev, symptom]
    );
-   setWarning(""); // Clear warning on change
+   setWarning("");
  };
- const predictDisease = () => {
+ const predictDisease = async () => {
    if (selected.length === 0) {
      setWarning("Please select at least one symptom to analyze.");
      return;
    }
-   let bestMatch = { name: "Unknown", count: 0 };
-   for (let [disease, symptoms] of Object.entries(diseaseMapping)) {
-     const matched = symptoms.filter((s) => selected.includes(s)).length;
-     if (matched > bestMatch.count) bestMatch = { name: disease, count: matched };
+   const token = localStorage.getItem("token");
+   const username = localStorage.getItem("username");
+   try {
+     const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/symptom/analyze", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`
+       },
+       body: JSON.stringify({
+         username,
+         symptoms: selected
+       })
+     });
+     if (!response.ok) throw new Error("Failed to analyze");
+     const data = await response.json();
+     setPredicted(data.condition);
+     setHistory(data.history.slice(-5)); // use updated history
+     localStorage.setItem("lastResult", JSON.stringify(data));
+   } catch (err) {
+     console.error("Prediction error:", err);
+     setWarning("Failed to analyze symptoms. Please try again.");
    }
-   setPredicted(bestMatch.name);
-   const updated = [...history, {
-     timestamp: new Date().toLocaleString(),
-     symptoms: selected,
-     disease: bestMatch.name
-   }].slice(-5);
-   const updatedUser = { ...user, history: updated };
-   setHistory(updated);
-   localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-   const users = JSON.parse(localStorage.getItem("users")) || [];
-   const allUsers = users.map(u => u.username === user.username ? updatedUser : u);
-   localStorage.setItem("users", JSON.stringify(allUsers));
  };
  return (
 <div className="page-container">
 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 <h2>Symptom Analyzer</h2>
-<button onClick={onLogout} style={{ background: "#e53935", color: "#fff", borderRadius: "6px", border: "none", padding: "8px 12px", cursor: "pointer" }}>Logout</button>
+<button
+         onClick={onLogout}
+         style={{
+           background: "#e53935",
+           color: "#fff",
+           borderRadius: "6px",
+           border: "none",
+           padding: "8px 12px",
+           cursor: "pointer"
+         }}
+>
+         Logout
+</button>
 </div>
      {warning && (
-<div style={{
-         backgroundColor: "#ffebee",
-         color: "#c62828",
-         padding: "10px 14px",
-         borderRadius: "8px",
-         marginTop: "1rem",
-         fontWeight: "600",
-         textAlign: "center",
-       }}>
+<div
+         style={{
+           backgroundColor: "#ffebee",
+           color: "#c62828",
+           padding: "10px 14px",
+           borderRadius: "8px",
+           marginTop: "1rem",
+           fontWeight: "600",
+           textAlign: "center"
+         }}
+>
          {warning}
 </div>
      )}
-<div style={{ marginTop: "1.5rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem" }}>
+<div
+       style={{
+         marginTop: "1.5rem",
+         display: "grid",
+         gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+         gap: "1rem"
+       }}
+>
        {symptomsList.map((symptom) => (
 <label key={symptom} className="symptom-card">
 <input
@@ -94,10 +129,10 @@ const SymptomAnalyzer = ({ user, onLogout }) => {
          fontSize: "1.1rem",
          cursor: "pointer",
          boxShadow: "0 6px 12px rgba(25, 118, 210, 0.3)",
-         transition: "background-color 0.3s ease",
+         transition: "background-color 0.3s ease"
        }}
-       onMouseEnter={e => e.target.style.backgroundColor = "#155a9a"}
-       onMouseLeave={e => e.target.style.backgroundColor = "#1976d2"}
+       onMouseEnter={(e) => (e.target.style.backgroundColor = "#155a9a")}
+       onMouseLeave={(e) => (e.target.style.backgroundColor = "#1976d2")}
 >
        Analyze Symptoms
 </button>

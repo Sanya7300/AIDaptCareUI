@@ -1,48 +1,105 @@
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 const RegisterPage = () => {
- const [username, setUsername] = useState("");
- const [password, setPassword] = useState("");
- const navigate = useNavigate();
- const handleRegister = (e) => {
-   e.preventDefault();
-   const users = JSON.parse(localStorage.getItem("users")) || [];
-   if (users.find((u) => u.username === username)) {
-     alert("User already exists.");
-   } else {
-     const newUser = { username, password, history: [] };
-     localStorage.setItem("users", JSON.stringify([...users, newUser]));
-     alert("Registration successful! Please log in.");
-     navigate("/");
-   }
- };
- return (
-<div className="page-container" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+  const [username, setUsername] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/auth/register", {
+
+        method: "POST",
+
+        headers: { "Content-Type": "application/json" },
+
+        body: JSON.stringify({ username, password })
+
+      });
+
+      if (!response.ok) throw new Error("Registration failed");
+
+      alert("Registration successful! You can now log in.");
+
+      navigate("/");
+
+    } catch (err) {
+
+      alert("User already exists or registration failed.");
+
+    }
+
+  };
+
+  return (
+<div
+
+      className="page-container"
+
+      style={{
+
+        minHeight: "100vh",
+
+        display: "flex",
+
+        alignItems: "center",
+
+        justifyContent: "center"
+
+      }}
+>
 <form className="form-container" onSubmit={handleRegister}>
-<h2>Create Account</h2>
+<h2>Register</h2>
 <input
-         type="text"
-         placeholder="Choose a username"
-         value={username}
-         onChange={(e) => setUsername(e.target.value)}
-         required
-       />
+
+          type="text"
+
+          placeholder="Username"
+
+          value={username}
+
+          onChange={(e) => setUsername(e.target.value)}
+
+          required
+
+        />
 <input
-         type="password"
-         placeholder="Choose a password"
-         value={password}
-         onChange={(e) => setPassword(e.target.value)}
-         required
-       />
+
+          type="password"
+
+          placeholder="Password"
+
+          value={password}
+
+          onChange={(e) => setPassword(e.target.value)}
+
+          required
+
+        />
 <button type="submit">Register</button>
-<p style={{ marginTop: "1rem" }}>
-         Already have an account?{" "}
-<span style={{ color: "#1976d2", cursor: "pointer" }} onClick={() => navigate("/")}>
-           Login
+<p>
+
+          Already have an account?{" "}
+<span onClick={() => navigate("/")} style={{ color: "blue", cursor: "pointer" }}>
+
+            Login
 </span>
 </p>
 </form>
 </div>
- );
+
+  );
+
 };
+
 export default RegisterPage;
+ 
