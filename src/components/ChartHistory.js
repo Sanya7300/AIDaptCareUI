@@ -1,11 +1,14 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie } from "recharts";
+
 const ChartHistory = ({ history }) => {
- const chartData = history.map((entry, index) => ({
-   name: `#${index + 1}`,
-   Disease: entry.disease,
-   Count: entry.symptoms.length
- }));
+const chartData = history.map((entry, index) => ({
+  name: `#${index + 1}`,
+  Disease: entry.predictedCondition,
+  Count: entry.count || 1,
+  Symptoms: Array.isArray(entry.symptoms) ? entry.symptoms.join(", ") : entry.symptoms,
+  Remedies: Array.isArray(entry.remedies) ? entry.remedies.join(", ") : entry.remedies
+}));
 const [chartType, setChartType] = React.useState("pie");
 
 return (
@@ -45,7 +48,22 @@ return (
     <ResponsiveContainer width="100%" height={300}>
       {chartType === "pie" ? (
         <PieChart>
-          <Tooltip />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload[0].payload;
+                return (
+                  <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
+                    <strong>{data.Disease}</strong>
+                    <div>Count: {data.Count}</div>
+                    <div>Symptoms: {data.Symptoms}</div>
+                    <div>Remedies: {data.Remedies}</div>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
           <Pie
             data={chartData}
             dataKey="Count"
@@ -61,7 +79,22 @@ return (
         <BarChart data={chartData}>
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                const data = payload[0].payload;
+                return (
+                  <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
+                    <strong>{data.Disease}</strong>
+                    <div>Count: {data.Count}</div>
+                    <div>Symptoms: {data.Symptoms}</div>
+                    <div>Remedies: {data.Remedies}</div>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
           <Bar dataKey="Count" fill="#43a047" />
         </BarChart>
       )}

@@ -77,7 +77,9 @@ return (
           borderRadius: "6px",
           border: "none",
           padding: "8px 12px",
-          cursor: "pointer"
+          cursor: "pointer",
+          width: "20%",
+          alignSelf: "center"
         }}
       >
         Logout
@@ -116,6 +118,40 @@ return (
           {symptom}
         </label>
       ))}
+      <div style={{ gridColumn: "1 / -1", display: "flex", gap: "1rem" }}>
+        <button
+          type="button"
+          style={{
+            background: "#43a047",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 0",
+            fontWeight: "bold",
+            cursor: "pointer",
+            flex: 1
+          }}
+          onClick={() => setSelected(symptomsList)}
+        >
+          Select All
+        </button>
+        <button
+          type="button"
+          style={{
+            background: "#43a047",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "10px 0",
+            fontWeight: "bold",
+            cursor: "pointer",
+            flex: 1
+          }}
+          onClick={() => setSelected([])}
+        >
+          Deselect All
+        </button>
+      </div>
     </div>
     <div
       style={{
