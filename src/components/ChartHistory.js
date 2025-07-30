@@ -19,12 +19,13 @@ return (
         <button
           style={{
             marginRight: "0.5rem",
-            backgroundColor: chartType === "pie" ? "#1976d2" : "#e0e0e0",
+            backgroundColor: chartType === "pie" ? "#43a047" : "#e0e0e0",
             color: chartType === "pie" ? "#fff" : "#333",
             border: "none",
             borderRadius: "20px",
             padding: "8px 16px",
-            cursor: "pointer"
+            cursor: "pointer",
+            opacity: chartType === "pie" ? 1 : 0.6
           }}
           onClick={() => setChartType("pie")}
         >
@@ -37,7 +38,8 @@ return (
             border: "none",
             borderRadius: "20px",
             padding: "8px 16px",
-            cursor: "pointer"
+            cursor: "pointer",
+            opacity: chartType === "bar" ? 1 : 0.6
           }}
           onClick={() => setChartType("bar")}
         >
@@ -71,7 +73,7 @@ return (
             cx="50%"
             cy="50%"
             outerRadius={100}
-            fill="#1976d2"
+            fill="#43a047"
             label
           />
         </PieChart>
