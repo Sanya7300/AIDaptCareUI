@@ -10,6 +10,7 @@ const RemediesPage = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const lastResult = JSON.parse(localStorage.getItem("lastResult"));
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (lastResult?.condition === disease && lastResult?.remedies?.length > 0) {
       setRemedies(
@@ -25,6 +26,7 @@ const RemediesPage = () => {
     const question = chatInput.trim();
     setChatMessages((prev) => [...prev, `🧑 You: ${question}`]);
     setChatInput("");
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/symptom/ask", {
@@ -43,6 +45,8 @@ const RemediesPage = () => {
       setChatMessages((prev) => [...prev, `🤖 Assistant: ${data.reply}`]);
     } catch (err) {
       setChatMessages((prev) => [...prev, "⚠️ AI Assistant failed. Try again."]);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -162,7 +166,10 @@ const RemediesPage = () => {
           >
             AI Assistant
             <button
-              onClick={() => setShowChat(false)}
+              onClick={() => {
+                setChatMessages([]);
+                setShowChat(false);
+              }}
               style={{
                 background: "transparent",
                 border: "none",
@@ -198,6 +205,44 @@ const RemediesPage = () => {
                 </div>
               ))
             )}
+            {loading && (
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}>
+                  {/* Animated loader icon */}
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 50 50"
+                    style={{ marginBottom: "8px" }}
+                  >
+                    <circle
+                      cx="25"
+                      cy="25"
+                      r="20"
+                      fill="none"
+                      stroke="#0288d1"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeDasharray="31.4 94.2"
+                      strokeDashoffset="0"
+                    >
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 25 25"
+                        to="360 25 25"
+                        dur="1s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
           <div
             style={{
@@ -224,6 +269,7 @@ const RemediesPage = () => {
                 fontSize: "1rem",
                 marginRight: "12px",
               }}
+              disabled={loading}
             />
             <button
               style={{
@@ -233,9 +279,11 @@ const RemediesPage = () => {
                 borderRadius: "6px",
                 padding: "8px 14px",
                 fontWeight: "600",
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.7 : 1,
               }}
               onClick={handleSend}
+              disabled={loading}
             >
               Send
             </button>
