@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 
 const doctors = [
-  { name: "Dr. Asha Mehta", specialty: "Endocrinologist", experience: 12, contact: "asha.mehta@hospital.com" },
-  { name: "Dr. Rajiv Kumar", specialty: "Nephrologist", experience: 15, contact: "rajiv.kumar@hospital.com" },
-  { name: "Dr. Priya Singh", specialty: "Cardiologist", experience: 10, contact: "priya.singh@hospital.com" },
+  { name: "Dr. Asha Mehta", specialty: "Gynecologist", experience: 12, contact: "asha.mehta@hospital.com" },
   { name: "Dr. Sunil Patel", specialty: "General Physician", experience: 8, contact: "sunil.patel@hospital.com" },
+  { name: "Dr. Anjali Verma", specialty: "Dermatologist", experience: 5, contact: "anjali.verma@hospital.com" },
+  { name: "Dr. Rohan Gupta", specialty: "Orthopedic", experience: 20, contact: "rohan.gupta@hospital.com" },
+  { name: "Dr. Neha Sharma", specialty: "Pediatrician", experience: 7, contact: "neha.sharma@hospital.com" }
 ];
 
 const today = new Date();
@@ -153,6 +154,35 @@ const CalendarModal = ({ doctor, onClose, onSelect }) => {
 
 const DoctorList = ({ onClose, onAppointment }) => {
     const [calendarDoctor, setCalendarDoctor] = useState(null);
+    const [city, setCity] = useState("Bangalore");
+
+    // Get user's city using geolocation and reverse geocoding
+    React.useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    // Use OpenStreetMap Nominatim API for reverse geocoding
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                const { city: detectedCity, town, village, state, county } = data.address;
+                                // Prefer city, fallback to town/village/county/state if city not found
+                                const resolvedCity = detectedCity || town || village || county || state;
+                                if (resolvedCity) setCity(resolvedCity);
+
+                                // Optionally, you can store latitude and longitude if needed
+                                // setLatLng({ lat: latitude, lng: longitude });
+                            }
+                        })
+                        .catch(() => {});
+                },
+                () => {},
+                { timeout: 5000 }
+            );
+        }
+    }, []);
 
     const handleBookClick = (doc) => {
         setCalendarDoctor(doc);
@@ -166,18 +196,18 @@ const DoctorList = ({ onClose, onAppointment }) => {
         setCalendarDoctor(null);
         if (onAppointment) onAppointment(appointment);
     };
- const getPractoSearchLink = (specialization, city = "Bangalore") => {
-  const queryObject = [
-    {
-      word: specialization,
-      autocompleted: true,
-      category: "subspeciality",
-    },
-  ];
-  const query = encodeURIComponent(JSON.stringify(queryObject));
-  return `https://www.practo.com/search/doctors?results_type=doctor&q=${query}&city=${encodeURIComponent(city)}`;
-};
 
+    const getPractoSearchLink = (specialization) => {
+      const queryObject = [
+        {
+          word: specialization,
+          autocompleted: true,
+          category: "subspeciality",
+        },
+      ];
+      const query = encodeURIComponent(JSON.stringify(queryObject));
+    return `https://www.practo.com/search/doctors?results_type=doctor&q=${query}&city=${encodeURIComponent(city)}`;
+    };
 
     return (
         <>
@@ -233,7 +263,7 @@ const DoctorList = ({ onClose, onAppointment }) => {
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Experience (yrs)</th>
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Contact</th>
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Appointment</th>
-                                <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Explore Practo Listings</th>
+                                <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>More Info About Doctor</th>
 
                             </tr>
                         </thead>
@@ -266,7 +296,7 @@ const DoctorList = ({ onClose, onAppointment }) => {
                                             rel="noopener noreferrer"
                                             style={{ color: "#1976d2", textDecoration: "underline" }}
                                         >
-                                            Search on Practo
+                                            More details on Practo
                                         </a>
                                     </td>
                                 </tr>
