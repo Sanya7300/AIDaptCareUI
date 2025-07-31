@@ -166,6 +166,18 @@ const DoctorList = ({ onClose, onAppointment }) => {
         setCalendarDoctor(null);
         if (onAppointment) onAppointment(appointment);
     };
+ const getPractoSearchLink = (specialization, city = "Bangalore") => {
+  const queryObject = [
+    {
+      word: specialization,
+      autocompleted: true,
+      category: "subspeciality",
+    },
+  ];
+  const query = encodeURIComponent(JSON.stringify(queryObject));
+  return `https://www.practo.com/search/doctors?results_type=doctor&q=${query}&city=${encodeURIComponent(city)}`;
+};
+
 
     return (
         <>
@@ -221,6 +233,8 @@ const DoctorList = ({ onClose, onAppointment }) => {
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Experience (yrs)</th>
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Contact</th>
                                 <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Appointment</th>
+                                <th style={{ padding: "10px", borderBottom: "1px solid #ddd", textAlign: "left" }}>Explore Practo Listings</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -244,6 +258,16 @@ const DoctorList = ({ onClose, onAppointment }) => {
                                         >
                                             Book
                                         </button>
+                                    </td>
+                                    <td style={{ padding: "10px", borderBottom: "1px solid #eee" }}>
+                                        <a
+                                            href={getPractoSearchLink(doc.specialty)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ color: "#1976d2", textDecoration: "underline" }}
+                                        >
+                                            Search on Practo
+                                        </a>
                                     </td>
                                 </tr>
                             ))}
