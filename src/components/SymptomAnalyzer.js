@@ -5,7 +5,7 @@ const symptomsList = [
   "Fatigue", "Frequent Urination", "Blurred Vision", "Weight Loss",
   "Swelling", "Shortness Of Breath", "Dizziness", "High Bp", "Headache"
 ];
-const SymptomAnalyzer = ({ user, onLogout }) => {
+const SymptomAnalyzer = () => {
  const [selected, setSelected] = useState([]);
  const [predicted, setPredicted] = useState("");
  const [history, setHistory] = useState([]);
@@ -69,21 +69,6 @@ return (
   <div className="page-container">
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <h2>Symptom Analyzer</h2>
-      <button
-        onClick={onLogout}
-        style={{
-          background: "#e53935",
-          color: "#fff",
-          borderRadius: "6px",
-          border: "none",
-          padding: "8px 12px",
-          cursor: "pointer",
-          width: "20%",
-          alignSelf: "center"
-        }}
-      >
-        Logout
-      </button>
     </div>
     {warning && (
       <div
@@ -118,7 +103,7 @@ return (
           {symptom}
         </label>
       ))}
-      <div style={{ gridColumn: "1 / -1", display: "flex", gap: "1rem" }}>
+      <div style={{ gridColumn: "1 / -1",width:"150px", gap: "1rem" }}>
         <button
           type="button"
           style={{
@@ -129,28 +114,14 @@ return (
             padding: "10px 0",
             fontWeight: "bold",
             cursor: "pointer",
+            width: "50%",
             flex: 1
           }}
           onClick={() => setSelected(symptomsList)}
         >
           Select All
         </button>
-        <button
-          type="button"
-          style={{
-            background: "#43a047",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 0",
-            fontWeight: "bold",
-            cursor: "pointer",
-            flex: 1
-          }}
-          onClick={() => setSelected([])}
-        >
-          Deselect All
-        </button>
+        
       </div>
     </div>
     <div

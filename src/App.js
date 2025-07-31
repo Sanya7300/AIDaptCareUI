@@ -9,6 +9,7 @@ import RegisterPage from "./components/RegisterPage";
 import SymptomAnalyzer from "./components/SymptomAnalyzer";
 
 import RemediesPage from "./components/RemediesPage";
+import Header from "./components/Header";
 
 function App() {
 
@@ -35,39 +36,30 @@ function App() {
   };
 
   const handleLogout = () => {
-
     setUser(null);
-
     localStorage.removeItem("currentUser");
-
+    window.location.href = "/";
   };
 
   return (
-<Router>
-<Routes>
-<Route
-
+    <Router>
+      {user && <Header onLogout={handleLogout} />}
+      <Routes>
+        <Route
           path="/"
-
           element={
-
             user ? (
-<SymptomAnalyzer user={user} onLogout={handleLogout} />
-
+              <SymptomAnalyzer user={user} onLogout={handleLogout} />
             ) : (
-<LoginPage onLogin={handleLogin} />
-
+              <LoginPage onLogin={handleLogin} />
             )
-
           }
-
         />
-<Route path="/register" element={<RegisterPage />} />
-<Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
-<Route path="/remedies/:disease" element={<RemediesPage />} />
-</Routes>
-</Router>
-
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
+        <Route path="/remedies/:disease" element={<RemediesPage />} />
+      </Routes>
+    </Router>
   );
 
 }
