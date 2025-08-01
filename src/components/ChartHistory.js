@@ -13,8 +13,7 @@ const ChartHistory = ({ history }) => {
     "default": "#a2c22fff"
   };
   // Helper to normalize disease name for display and color
-  const getDisplayDisease = (disease) =>
-    disease === "Tension Headache" ? "Headache" : disease;
+  
   const chartData = history.map((entry, index) => ({
     name: `#${index + 1}`,
     Disease: entry.predictedCondition,
