@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Background gradient animation
+const isMobile = typeof window !== "undefined" && window.innerWidth < 700;
 const backgroundStyle = {
  minHeight: "100vh",
  width: "100vw",
@@ -46,29 +47,32 @@ const loginWrapperStyle = {
 };
 // Form section
 const formSectionStyle = {
- flex: 1,
- padding: "2.5rem",
- display: "flex",
- flexDirection: "column",
- justifyContent: "center",
+  flex: 1,
+  padding: isMobile ? "2.5rem" : "2.5rem 2.5rem 2.5rem 1.2rem",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  marginLeft: isMobile ? 0 : "-24px"
 };
 // Image section
 const imageSectionStyle = {
- flex: 1,
- backgroundImage: `url('https://png.pngtree.com/png-vector/20240130/ourmid/pngtree-medical-app-3d-character-illustration-png-image_11568845.png')`,
- backgroundSize: "cover",
- backgroundPosition: "center",
- minHeight: "400px",
+  flex: 1,
+  backgroundImage: `url('https://png.pngtree.com/png-vector/20240130/ourmid/pngtree-medical-app-3d-character-illustration-png-image_11568845.png')`,
+  backgroundSize: isMobile ? "contain" : "cover",
+  backgroundRepeat: isMobile ? "no-repeat" : undefined,
+  backgroundPosition: "center",
+  minHeight: isMobile ? "220px" : "400px",
+  height: isMobile ? "220px" : undefined,
 };
 // Input
 const inputStyle = {
- margin: "0.75rem 0",
- padding: "0.9rem 1rem",
- borderRadius: "10px",
- border: "1px solid #ccc",
- width: "100%",
- fontSize: "1rem",
- boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)"
+  margin: "0.75rem 0",
+  padding: isMobile ? "0.6rem 0.7rem" : "0.9rem 1rem",
+  borderRadius: "10px",
+  border: "1px solid #ccc",
+  width: "100%",
+  fontSize: isMobile ? "0.95rem" : "1rem",
+  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)"
 };
 // Button
 const buttonStyle = {
@@ -112,39 +116,48 @@ const LoginPage = ({ onLogin }) => {
      alert("Invalid credentials. Please try again.");
    }
  };
- return (
-<div style={backgroundStyle}>
-<div style={overlayStyle}></div>
-<div style={loginWrapperStyle}>
-<div style={imageSectionStyle}></div>
-<form style={formSectionStyle} onSubmit={handleLogin}>
-<h2 style={{ marginBottom: "2rem", color: "#2575fc", fontSize: "2rem", textAlign: "center" }}>Welcome to AIDaptCare</h2>
-<input
-           type="text"
-           placeholder="Username"
-           value={username}
-           onChange={(e) => setUsername(e.target.value)}
-           required
-           style={inputStyle}
-         />
-<input
-           type="password"
-           placeholder="Password"
-           value={password}
-           onChange={(e) => setPassword(e.target.value)}
-           required
-           style={inputStyle}
-         />
-<button type="submit" style={buttonStyle}>Login</button>
-<p style={{ marginTop: "1rem", textAlign: "center" }}>
-           Don't have an account?{" "}
-<span onClick={() => navigate("/register")} style={linkStyle}>
-             Register
-</span>
-</p>
-</form>
-</div>
-</div>
- );
+return (
+  <div style={backgroundStyle}>
+    <div style={overlayStyle}></div>
+    <div style={loginWrapperStyle}>
+      <div style={imageSectionStyle}></div>
+      <form style={formSectionStyle} onSubmit={handleLogin}>
+        <h2
+          style={{
+            marginBottom: "2rem",
+            color: "#2575fc",
+            fontSize: "2rem",
+            textAlign: "center"
+          }}
+        >
+          {isMobile ? "Welcome to AIDaptCare" : (<><span>Welcome to</span><br /><span>AIDaptCare</span></>)}
+        </h2>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          style={inputStyle}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={inputStyle}
+        />
+        <button type="submit" style={buttonStyle}>Login</button>
+        <p style={{ marginTop: "1rem", textAlign: "center" }}>
+          Don't have an account?{" "}
+          <span onClick={() => navigate("/register")} style={linkStyle}>
+            Register
+          </span>
+        </p>
+      </form>
+    </div>
+  </div>
+);
 };
 export default LoginPage;
