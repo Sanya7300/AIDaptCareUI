@@ -157,7 +157,18 @@ const UploadReport = () => {
       paddingTop: "5vh",
      }}
     >
-     <div style={{ display: "flex", flexDirection: "row", width: "100%", maxWidth: 1100, gap: 32 }}>
+     <div
+       style={{
+         display: "flex",
+         flexDirection:
+           typeof window !== "undefined" && window.innerWidth < 700
+             ? "column"
+             : "row",
+         width: "100%",
+         maxWidth: 1100,
+         gap: 32,
+       }}
+     >
       {/* Left Card: Upload & Diagnosis */}
       <div style={{ ...cardStyle, flex: 1, minWidth: 0 }}>
         <div style={iconStyle}>📄</div>
