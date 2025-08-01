@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../icons/logo.jpg'; // Assuming you have a logo image
 
 const headerStyle = {
@@ -35,59 +35,66 @@ const centerContainerStyle = {
     flex: 1
 };
 const username = localStorage.getItem("username");
-const Header = ({ onLogout }) => (
-    <header style={headerStyle}>
-        <img src={Logo} alt="Logo" style={logoStyle} />
-        <div style={centerContainerStyle}>
-            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', display: 'block' }}>AIDaptCare</span>
-            <span
+
+const Header = ({ onLogout }) => {
+    const [user, setUser] = React.useState(username);
+    useEffect(() => {
+        setUser(localStorage.getItem("username"));
+    },[user]);
+    return (
+        <header style={headerStyle}>
+            <img src={Logo} alt="Logo" style={logoStyle} />
+            <div style={centerContainerStyle}>
+                <span style={{ fontSize: '1.5rem', fontWeight: 'bold', display: 'block' }}>AIDaptCare</span>
+                <span
+                    style={{
+                        marginTop: '8px',
+                        fontSize: '1rem',
+                        display: 'none', // Hide by default (desktop)
+                        marginLeft: '10px',
+                    }}
+                    className="header-username-mobile"
+                >
+                    {user}
+                </span>
+            </div>
+            <div
                 style={{
-                    marginTop: '8px',
-                    fontSize: '1rem',
-                    display: 'none', // Hide by default (desktop)
-                    marginLeft: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
                 }}
-                className="header-username-mobile"
+                className="header-username-desktop"
             >
-                {username}
-            </span>
-        </div>
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-            }}
-            className="header-username-desktop"
-        >
-            <span style={{ marginRight: '16px', fontSize: '1rem' }}>Welcome, {username}</span>
-        </div>
-        <button
-            style={buttonStyle}
-            className="header-logout-btn"
-            onClick={onLogout}
-        >
-            Logout
-        </button>
-        <style>
-            {`
-                @media (max-width: 700px) {
-                    .header-username-desktop {
-                        display: none !important;
+                <span style={{ marginRight: '16px', fontSize: '1rem' }}>Welcome, {user}</span>
+            </div>
+            <button
+                style={buttonStyle}
+                className="header-logout-btn"
+                onClick={onLogout}
+            >
+                Logout
+            </button>
+            <style>
+                {`
+                    @media (max-width: 700px) {
+                        .header-username-desktop {
+                            display: none !important;
+                        }
+                        .header-username-mobile {
+                            display: block !important;
+                            text-align: center;
+                        }
+                        .header-logout-btn {
+                            margin-left: 16px !important;
+                        }
                     }
                     .header-username-mobile {
-                        display: block !important;
-                        text-align: center;
+                        margin-top: 8px;
                     }
-                    .header-logout-btn {
-                        margin-left: 16px !important;
-                    }
-                }
-                .header-username-mobile {
-                    margin-top: 8px;
-                }
-            `}
-        </style>
-    </header>
-);
+                `}
+            </style>
+        </header>
+    );
+};
 
 export default Header;

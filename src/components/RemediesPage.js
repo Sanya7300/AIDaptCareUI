@@ -50,7 +50,7 @@ const RemediesPage = () => {
     }
   };
   return (
-    <div className="page-container" style={{ maxWidth: "700px", margin: "2rem auto" }}>
+    <div className="page-container" style={{ maxWidth: "1100px", margin: "2rem auto" }}>
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -67,38 +67,115 @@ const RemediesPage = () => {
       >
         ← Back
       </button>
-      <h2 style={{ color: "#1976d2", marginBottom: "1.5rem", textAlign: "center" }}>
-        Home Remedies for {disease}
-      </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "1.5rem",
-        }}
-      >
-        {remedies.length === 0 && (
-          <p style={{ gridColumn: "1/-1", textAlign: "center" }}>
-            No remedies found. Please analyze symptoms first.
-          </p>
-        )}
-        {remedies.map(({ title, desc }) => (
+      {/* Removed main heading as requested */}
+      <div style={{ display: "flex", gap: "2.5rem", alignItems: "stretch" }}>
+        {/* Remedies Left Side */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+          <h3 style={{ color: "#1565c0", marginBottom: "1rem" }}>Remedies</h3>
           <div
-            key={title}
             style={{
-              backgroundColor: "white",
-              borderRadius: "12px",
-              padding: "20px",
-              boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
-              cursor: "default",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.2rem",
+              flex: 1,
+              minHeight: 400,
             }}
-            className="remedy-card"
           >
-            <h3 style={{ color: "#1565c0", marginBottom: "8px" }}>{title}</h3>
-            <p style={{ color: "#555", fontSize: "0.95rem", lineHeight: "1.4" }}>{desc}</p>
+            {remedies.length === 0 && (
+              <p style={{ textAlign: "center", flex: 1, minHeight: 120, background: "white", borderRadius: "12px", padding: "20px" }}>
+                No remedies found. Please analyze symptoms first.
+              </p>
+            )}
+            {remedies.map(({ title, desc }) => (
+              <div
+                key={title}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "12px",
+                  padding: "20px",
+                  boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  cursor: "default",
+                  flex: 1,
+                  minHeight: 120,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+                className="remedy-card"
+              >
+                <h3 style={{ color: "#1565c0", marginBottom: "8px" }}>{title}</h3>
+                <p style={{ color: "#555", fontSize: "0.95rem", lineHeight: "1.4" }}>{desc}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        {/* Medical Checkup, Pills, SOPs Right Side */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "stretch" }}>
+          <h3 style={{ color: "#1565c0", marginBottom: "1rem" }}>Medical Checkup & SOPs</h3>
+          <div style={{
+            backgroundColor: "#f8fafd",
+            borderRadius: "12px",
+            padding: "20px 24px",
+            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
+            marginBottom: "1.2rem",
+            minHeight: 120,
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center"
+          }}>
+            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Recommended Medical Checkups</h4>
+            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
+              <li>Blood Test (CBC, Fasting Glucose, etc.)</li>
+              <li>Blood Pressure Monitoring</li>
+              <li>Kidney Function Test</li>
+              <li>ECG (if required)</li>
+            </ul>
+          </div>
+          <div style={{
+            backgroundColor: "#f8fafd",
+            borderRadius: "12px",
+            padding: "20px 24px",
+            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
+            marginBottom: "1.2rem",
+            minHeight: 120,
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center"
+          }}>
+            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Common Pills / Medications</h4>
+            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
+              <li>Paracetamol (for fever/pain)</li>
+              <li>Metformin (for diabetes, if prescribed)</li>
+              <li>Antihypertensives (for high BP, if prescribed)</li>
+              <li>Iron Supplements (for anemia, if prescribed)</li>
+            </ul>
+            <div style={{ color: "#c62828", fontSize: "0.97rem", marginTop: 10, fontWeight: 500 }}>
+              <span>⚠️ Please consult a doctor before taking any of the above medicines.</span>
+            </div>
+          </div>
+          <div style={{
+            backgroundColor: "#f8fafd",
+            borderRadius: "12px",
+            padding: "20px 24px",
+            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
+            flex: 1,
+            minHeight: 120,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center"
+          }}>
+            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Standard Operating Procedures (SOPs)</h4>
+            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
+              <li>Follow doctor's advice and prescribed medication schedule.</li>
+              <li>Maintain a healthy diet and regular exercise.</li>
+              <li>Monitor symptoms and report any worsening to your doctor.</li>
+              <li>Stay hydrated and avoid self-medication.</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
         <button

@@ -104,22 +104,23 @@ const SymptomAnalyzer = () => {
          marginTop: "1rem"
        }}>
 <button
-           type="button"
-           style={{
-             backgroundColor: "#f57c00",
-             color: "#fff",
-             border: "none",
-             borderRadius: "8px",
-             padding: "10px 20px",
-             fontWeight: "bold",
-             cursor: "pointer",
-             transition: "background-color 0.3s ease"
-           }}
-           onClick={() => setSelected(symptomsList)}
-           onMouseEnter={(e) => (e.target.style.backgroundColor = "#80cc08")}
-           onMouseLeave={(e) => (e.target.style.backgroundColor = "#71b308ff")}
+  type="button"
+  style={{
+    backgroundColor: "#f57c00",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    padding: "6px 12px", // reduced size
+    fontWeight: "500",
+    fontSize: "0.95rem", // reduced text size
+    cursor: "pointer",
+    transition: "background-color 0.3s ease"
+  }}
+  onClick={() => setSelected(symptomsList)}
+  onMouseEnter={e => (e.target.style.backgroundColor = "#80cc08")}
+  onMouseLeave={e => (e.target.style.backgroundColor = "#71b308ff")}
 >
-           Select All Symptoms
+  Select All Symptoms
 </button>
 <button
            onClick={() => navigate("/upload-report")}
