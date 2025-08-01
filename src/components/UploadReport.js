@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
+import {  useNavigate } from "react-router-dom";
 const UploadReport = () => {
  const [file, setFile] = useState(null);
  const [status, setStatus] = useState("");
  const [isUploading, setIsUploading] = useState(false);
  const [diagnosis, setDiagnosis] = useState("");
  const fileInputRef = useRef();
+ const navigate = useNavigate();
  const handleFileChange = (e) => {
    setFile(e.target.files[0]);
    setStatus("");
@@ -125,7 +127,28 @@ const UploadReport = () => {
    marginBottom: "1rem",
  };
  return (
-<div style={containerStyle}>
+  <>
+   <button
+        onClick={() => navigate(-1)}
+        style={{
+          marginBottom: "1.5rem",
+          backgroundColor: "#1976d2",
+          color: "white",
+          border: "none",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          cursor: "pointer",
+          top: "2rem",
+          left: "4rem",
+          position: "relative",
+          marginRight: "1rem",
+          boxShadow: "0 4px 10px rgba(25, 118, 210, 0.4)",
+          fontWeight: "600",
+        }}
+      >
+        ← Back
+      </button>
+<div style={{ ...containerStyle, alignItems: "flex-start", justifyContent: "flex-start", paddingLeft: "5vw", paddingTop: "5vh" }}>
 <div style={cardStyle}>
 <div style={iconStyle}>📄</div>
 <h2 style={headingStyle}>Upload Medical Report</h2>
@@ -170,6 +193,7 @@ const UploadReport = () => {
        )}
 </div>
 </div>
+</>
  );
 };
 export default UploadReport;

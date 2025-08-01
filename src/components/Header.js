@@ -36,16 +36,57 @@ const centerContainerStyle = {
 };
 const username = localStorage.getItem("username");
 const Header = ({ onLogout }) => (
-    
     <header style={headerStyle}>
         <img src={Logo} alt="Logo" style={logoStyle} />
         <div style={centerContainerStyle}>
-            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>AIDaptCare</span>
+            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', display: 'block' }}>AIDaptCare</span>
+            <span
+                style={{
+                    marginTop: '8px',
+                    fontSize: '1rem',
+                    display: 'none', // Hide by default (desktop)
+                    marginLeft: '10px',
+                }}
+                className="header-username-mobile"
+            >
+                {username}
+            </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+            }}
+            className="header-username-desktop"
+        >
             <span style={{ marginRight: '16px', fontSize: '1rem' }}>Welcome, {username}</span>
         </div>
-        <button style={buttonStyle} onClick={onLogout}>Logout</button>
+        <button
+            style={buttonStyle}
+            className="header-logout-btn"
+            onClick={onLogout}
+        >
+            Logout
+        </button>
+        <style>
+            {`
+                @media (max-width: 700px) {
+                    .header-username-desktop {
+                        display: none !important;
+                    }
+                    .header-username-mobile {
+                        display: block !important;
+                        text-align: center;
+                    }
+                    .header-logout-btn {
+                        margin-left: 16px !important;
+                    }
+                }
+                .header-username-mobile {
+                    margin-top: 8px;
+                }
+            `}
+        </style>
     </header>
 );
 
