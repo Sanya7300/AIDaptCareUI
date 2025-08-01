@@ -9,7 +9,9 @@ import RegisterPage from "./components/RegisterPage";
 import SymptomAnalyzer from "./components/SymptomAnalyzer";
 
 import RemediesPage from "./components/RemediesPage";
+import UploadReport from "./components/UploadReport";
 import Header from "./components/Header";
+
 
 function App() {
 
@@ -58,6 +60,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
         <Route path="/remedies/:disease" element={<RemediesPage />} />
+        <Route path="/upload-report" element={<UploadReport />} />
       </Routes>
     </Router>
   );
