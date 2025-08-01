@@ -128,72 +128,113 @@ const UploadReport = () => {
  };
  return (
   <>
-   <button
-        onClick={() => navigate(-1)}
-        style={{
-          marginBottom: "1.5rem",
-          backgroundColor: "#1976d2",
-          color: "white",
-          border: "none",
-          padding: "8px 16px",
-          borderRadius: "8px",
-          cursor: "pointer",
-          top: "2rem",
-          left: "4rem",
-          position: "relative",
-          marginRight: "1rem",
-          boxShadow: "0 4px 10px rgba(25, 118, 210, 0.4)",
-          fontWeight: "600",
-        }}
-      >
-        ← Back
-      </button>
-<div style={{ ...containerStyle, alignItems: "flex-start", justifyContent: "flex-start", paddingLeft: "5vw", paddingTop: "5vh" }}>
-<div style={cardStyle}>
-<div style={iconStyle}>📄</div>
-<h2 style={headingStyle}>Upload Medical Report</h2>
-       {/* Hidden File Input */}
-<input
+    <button
+     onClick={() => navigate(-1)}
+     style={{
+      marginBottom: "1.5rem",
+      backgroundColor: "#1976d2",
+      color: "white",
+      border: "none",
+      padding: "8px 16px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      top: "2rem",
+      left: "4rem",
+      position: "relative",
+      marginRight: "1rem",
+      boxShadow: "0 4px 10px rgba(25, 118, 210, 0.4)",
+      fontWeight: "600",
+     }}
+    >
+     ← Back
+    </button>
+    <div
+     style={{
+      ...containerStyle,
+      alignItems: "flex-start",
+      justifyContent: "flex-start",
+      paddingLeft: "5vw",
+      paddingTop: "5vh",
+     }}
+    >
+     <div style={{ display: "flex", flexDirection: "row", width: "100%", maxWidth: 1100, gap: 32 }}>
+      {/* Left Card: Upload & Diagnosis */}
+      <div style={{ ...cardStyle, flex: 1, minWidth: 0 }}>
+        <div style={iconStyle}>📄</div>
+        <h2 style={headingStyle}>Upload Medical Report</h2>
+        {/* Hidden File Input */}
+        <input
          type="file"
          ref={fileInputRef}
          onChange={handleFileChange}
          style={{ display: "none" }}
-       />
-       {/* Choose File Button */}
-<button
+        />
+        {/* Choose File Button */}
+        <button
          type="button"
          style={chooseButtonStyle}
          onClick={handleFileButtonClick}
->
+        >
          Choose File
-</button>
-       {/* Selected File Name */}
-       {file && <p style={fileNameStyle}>{file.name}</p>}
-       {/* Upload Button */}
-<form onSubmit={handleSubmit}>
-<button type="submit" style={uploadButtonStyle} disabled={isUploading}>
-           {isUploading ? "Uploading..." : "Upload"}
-</button>
-</form>
-       {/* Upload Status */}
-       {status && <p style={statusStyle}>{status}</p>}
-       {/* Diagnosis Result */}
-       {diagnosis && (
-<div style={diagnosisBoxStyle}>
-<p style={diagnosisTitleStyle}>Diagnosis:</p>
-<ul style={{ paddingLeft: "1.2rem", color: "#33691e", margin: 0 }}>
-             {diagnosis
-               .split(/\n|(?<=\d\.)/)
-               .map((item, index) => {
-                 const clean = item.trim().replace(/^[-•\d.\s]*/, "");
-                 return clean ? <li key={index}>{clean}</li> : null;
-               })}
-</ul>
-</div>
-       )}
-</div>
-</div>
-</>
+        </button>
+        {/* Selected File Name */}
+        {file && <p style={fileNameStyle}>{file.name}</p>}
+        {/* Upload Button */}
+        <form onSubmit={handleSubmit}>
+         <button type="submit" style={uploadButtonStyle} disabled={isUploading}>
+          {isUploading ? "Uploading..." : "Upload"}
+         </button>
+        </form>
+        {/* Upload Status */}
+        {status && <p style={statusStyle}>{status}</p>}
+        {/* Diagnosis Result */}
+        {diagnosis && (
+         <div style={diagnosisBoxStyle}>
+          <p style={diagnosisTitleStyle}>Diagnosis:</p>
+          <ul style={{ paddingLeft: "1.2rem", color: "#33691e", margin: 0 }}>
+            {diagnosis
+             .split(/\n|(?<=\d\.)/)
+             .map((item, index) => {
+              const clean = item.trim().replace(/^[-•\d.\s]*/, "");
+              return clean ? <li key={index}>{clean}</li> : null;
+             })}
+          </ul>
+         </div>
+        )}
+      </div>
+      {/* Right Card: Recommendations */}
+      {diagnosis && (
+        <div style={{ ...cardStyle, flex: 1, minWidth: 0, background: "#f8fafd" }}>
+         <div style={{ fontSize: "2.2rem", color: "#43a047", marginBottom: "1rem" }}>💊</div>
+         <h2 style={{ ...headingStyle, color: "#1976d2", fontSize: "1.3rem" }}>Recommended Tests & Medicines</h2>
+         {/* Simple extraction: look for lines with 'test' or 'medicine' keywords */}
+         <div style={{ textAlign: "left", marginTop: 10 }}>
+          <div style={{ fontWeight: 600, color: "#388e3c", marginBottom: 6 }}>Tests:</div>
+          <ul style={{ color: "#1976d2", paddingLeft: 18, margin: 0 }}>
+            {diagnosis
+             .split(/\n|(?<=\d\.)/)
+             .filter(line => /test|investigation|scan|panel|profile/i.test(line))
+             .map((item, idx) => {
+              const clean = item.trim().replace(/^[-•\d.\s]*/, "");
+              return clean ? <li key={"test-"+idx}>{clean}</li> : null;
+             })}
+          </ul>
+          <div style={{ fontWeight: 600, color: "#388e3c", margin: "12px 0 6px 0" }}>Medicines:</div>
+          <ul style={{ color: "#d84315", paddingLeft: 18, margin: 0 }}>
+            {diagnosis
+             .split(/\n|(?<=\d\.)/)
+             .filter(line => /medicine|tablet|pill|capsule|mg|syrup|injection|dose/i.test(line))
+             .map((item, idx) => {
+              const clean = item.trim().replace(/^[-•\d.\s]*/, "");
+              return clean ? <li key={"med-"+idx}>{clean}</li> : null;
+             })}
+          </ul>
+         </div>
+        </div>
+      )}
+     </div>
+    </div>
+  </>
  );
 };
 export default UploadReport;
