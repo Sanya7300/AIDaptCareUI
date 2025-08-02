@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import backgroundImage from "../images/aidaptcare.png"; // Import your image
+
 // Background gradient animation
 const isMobile = typeof window !== "undefined" && window.innerWidth < 700;
 const backgroundStyle = {
- minHeight: "100vh",
- width: "100vw",
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- background: "linear-gradient(135deg, #ff6a00 0%, #ee0979 40%, #00c3ff 80%, #fff200 100%)",
- backgroundSize: "400% 400%",
- animation: "shineBG 10s ease-in-out infinite",
- position: "relative",
+  minHeight: "100vh",
+  width: "100vw",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage
+  backgroundSize: "cover", // Or "contain" depending on your needs
+  backgroundRepeat: "no-repeat",
+  position: "relative",
 };
+
 const styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
 styleSheet.innerText = `
@@ -25,14 +28,15 @@ styleSheet.innerText = `
 document.head.appendChild(styleSheet);
 // Overlay blur
 const overlayStyle = {
- position: "absolute",
- top: 0,
- left: 0,
- width: "100vw",
- height: "100vh",
- background: "rgba(40, 60, 90, 0.65)",
- zIndex: 1,
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100vw",
+  height: "100vh",
+  background: "rgba(40, 60, 90, 0.65)",
+  zIndex: 1,
 };
+
 // Container layout
 const loginWrapperStyle = {
  display: "flex",
@@ -54,6 +58,7 @@ const formSectionStyle = {
   justifyContent: "center",
   marginLeft: isMobile ? 0 : "-24px"
 };
+
 // Image section
 const imageSectionStyle = {
   flex: 1,
@@ -67,12 +72,27 @@ const imageSectionStyle = {
 // Input
 const inputStyle = {
   margin: "0.75rem 0",
-  padding: isMobile ? "0.6rem 0.7rem" : "0.9rem 1rem",
-  borderRadius: "10px",
-  border: "1px solid #ccc",
+  padding: "0.9rem 1rem",
+  borderRadius: "8px",
+  border: "1px solid #a0a0a0", // Improved border color
   width: "100%",
-  fontSize: isMobile ? "0.95rem" : "1rem",
-  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.05)"
+  fontSize: "1rem",
+  boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)", // More subtle shadow
+  transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+  "&:focus": {
+    borderColor: "#007bff",
+    outline: 0,
+    boxShadow: "0 0 0 0.2rem rgba(0, 123, 255, 0.25)",
+  },
+};
+
+
+const headingStyle = {
+  backgroundImage: "linear-gradient(90deg, #80cc08 0%, #2575fc 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text",
+  textFillColor: "transparent",
 };
 // Button
 const buttonStyle = {
@@ -80,7 +100,7 @@ const buttonStyle = {
  padding: "0.9rem",
  borderRadius: "10px",
  border: "none",
- background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+ background: "linear-gradient(90deg, #80cc08 0%, #2575fc 100%)",
  color: "#fff",
  fontWeight: "bold",
  fontSize: "1rem",
@@ -130,7 +150,9 @@ return (
             textAlign: "center"
           }}
         >
-          {isMobile ? "Welcome to AIDaptCare" : (<><span>Welcome to</span><br /><span>AIDaptCare</span></>)}
+          {isMobile ? "Welcome to AIDaptCare" : (<><span style={headingStyle}>Welcome to</span>
+                <br />
+                <span style={headingStyle}>AIDaptCare</span></>)}
         </h2>
         <input
           type="text"
