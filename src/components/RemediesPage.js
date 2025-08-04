@@ -53,7 +53,7 @@ const RemediesPage = () => {
 
     setRemedies(cards);
   } 
-  });
+  }, [lastResult]);
 
 
 
