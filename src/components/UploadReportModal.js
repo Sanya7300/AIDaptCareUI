@@ -24,7 +24,7 @@ const UploadReportModal = ({ onClose }) => {
    try {
      setIsUploading(true);
      setStatus("Uploading and analyzing...");
-     const response = await fetch("http://localhost:5000/api/report/upload", {
+     const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/report/upload", {
        method: "POST",
        body: formData,
        headers: {

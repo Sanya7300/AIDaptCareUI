@@ -19,7 +19,7 @@ const SymptomAnalyzer = () => {
      const username = localStorage.getItem("username");
      const token = localStorage.getItem("token");
      try {
-       const response = await fetch(`http://localhost:5000/api/symptom/history/${username}`, {
+       const response = await fetch(`https://aidaptcareapi.azurewebsites.net/api/symptom/history/${username}`, {
          headers: { Authorization: `Bearer ${token}` }
        });
        if (!response.ok) throw new Error("Failed to fetch history");
@@ -45,7 +45,7 @@ const SymptomAnalyzer = () => {
    const token = localStorage.getItem("token");
    const username = localStorage.getItem("username");
    try {
-     const response = await fetch("http://localhost:5000/api/symptom/analyze", {
+     const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/symptom/analyze", {
        method: "POST",
        headers: {
          "Content-Type": "application/json",
