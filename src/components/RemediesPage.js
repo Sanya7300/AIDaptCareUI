@@ -11,16 +11,53 @@ const RemediesPage = () => {
   const [chatInput, setChatInput] = useState("");
   const lastResult = JSON.parse(localStorage.getItem("lastResult"));
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (lastResult?.condition === disease && lastResult?.remedies?.length > 0) {
-      setRemedies(
-        lastResult.remedies.map((r) => ({
-          title: r,
-          desc: "This remedy is suggested based on your symptom analysis."
-        }))
-      );
+  if (lastResult) {
+    const cards = [];
+
+     if (lastResult.condition && lastResult.condition.length > 0) {
+      cards.push({
+        title: "Condition",
+        desc: Array.isArray(lastResult.condition)
+          ? lastResult.condition.join(", ")
+          : lastResult.condition
+      });
     }
-  }, [disease, lastResult]);
+
+    if (lastResult.remedies && lastResult.remedies.length > 0) {
+      cards.push({
+        title: "Home Remedies",
+        desc: Array.isArray(lastResult.remedies)
+          ? lastResult.remedies.join(", ")
+          : lastResult.remedies
+      });
+    }
+
+    if (lastResult.medicines && lastResult.medicines.length > 0) {
+      cards.push({
+        title: "Recommended Medicines",
+        desc: Array.isArray(lastResult.medicines)
+          ? lastResult.medicines.join(", ")
+          : lastResult.medicines
+      });
+    }
+
+    if (lastResult.recommendedTests && lastResult.recommendedTests.length > 0) {
+      cards.push({
+        title: "Recommended Tests",
+        desc: Array.isArray(lastResult.recommendedTests)
+          ? lastResult.recommendedTests.join(", ")
+          : lastResult.recommendedTests
+      });
+    }
+
+    setRemedies(cards);
+  } 
+  }, []);
+
+
+
   const handleSend = async () => {
     if (!chatInput.trim()) return;
     const question = chatInput.trim();
@@ -49,6 +86,9 @@ const RemediesPage = () => {
       setLoading(false);
     }
   };
+
+
+
   return (
     <div className="page-container" style={{ maxWidth: "1100px", margin: "2rem auto" }}>
       <button
@@ -67,116 +107,107 @@ const RemediesPage = () => {
       >
         ← Back
       </button>
-      {/* Removed main heading as requested */}
-      <div style={{ display: "flex", gap: "2.5rem", alignItems: "stretch" }}>
-        {/* Remedies Left Side */}
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
-          <h3 style={{ color: "#1565c0", marginBottom: "1rem" }}>Remedies</h3>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.2rem",
-              flex: 1,
-              minHeight: 400,
-            }}
-          >
-            {remedies.length === 0 && (
-              <p style={{ textAlign: "center", flex: 1, minHeight: 120, background: "white", borderRadius: "12px", padding: "20px" }}>
-                No remedies found. Please analyze symptoms first.
-              </p>
-            )}
-            {remedies.map(({ title, desc }) => (
-              <div
-                key={title}
+      {/* Rendering all cards here */}
+      <div style={{ marginBottom: "2rem" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            color: "#1976d2",
+            fontWeight: "700",
+            fontSize: "2rem",
+            letterSpacing: "1px",
+            marginBottom: "1.5rem",
+            background: "linear-gradient(90deg, #1976d2 0%, #43a047 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          {lastResult?.predictedCondition
+            ? `Remedies & Recommendations for ${lastResult.predictedCondition}`
+            : "Remedies & Recommendations"}
+        </h2>
+        <div
+          className="remedies-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "2rem",
+            minHeight: 400,
+            maxWidth: 900,
+            margin: "0 auto",
+          }}
+        >
+          {remedies.map(({ title, desc }) => (
+            <div
+              key={title}
+              className="remedy-card"
+              style={{
+                backgroundColor: "white",
+                borderRadius: "16px",
+                padding: "28px 24px",
+                boxShadow: "0 8px 24px rgba(25, 118, 210, 0.10)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                minHeight: "unset",
+                border: "1.5px solid #e3eafc",
+                transition: "box-shadow 0.2s",
+                height: "auto",
+              }}
+            >
+              <h3
                 style={{
-                  backgroundColor: "white",
-                  borderRadius: "12px",
-                  padding: "20px",
-                  boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  cursor: "default",
-                  flex: 1,
-                  minHeight: 120,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center"
+                  color: "#1976d2",
+                  marginBottom: "12px",
+                  fontWeight: "600",
+                  fontSize: "1.2rem",
+                  letterSpacing: "0.5px",
                 }}
-                className="remedy-card"
               >
-                <h3 style={{ color: "#1565c0", marginBottom: "8px" }}>{title}</h3>
-                <p style={{ color: "#555", fontSize: "0.95rem", lineHeight: "1.4" }}>{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Medical Checkup, Pills, SOPs Right Side */}
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "stretch" }}>
-          <h3 style={{ color: "#1565c0", marginBottom: "1rem" }}>Medical Checkup & SOPs</h3>
-          <div style={{
-            backgroundColor: "#f8fafd",
-            borderRadius: "12px",
-            padding: "20px 24px",
-            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
-            marginBottom: "1.2rem",
-            minHeight: 120,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-          }}>
-            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Recommended Medical Checkups</h4>
-            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
-              <li>Blood Test (CBC, Fasting Glucose, etc.)</li>
-              <li>Blood Pressure Monitoring</li>
-              <li>Kidney Function Test</li>
-              <li>ECG (if required)</li>
-            </ul>
-          </div>
-          <div style={{
-            backgroundColor: "#f8fafd",
-            borderRadius: "12px",
-            padding: "20px 24px",
-            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
-            marginBottom: "1.2rem",
-            minHeight: 120,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-          }}>
-            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Common Pills / Medications</h4>
-            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
-              <li>Paracetamol (for fever/pain)</li>
-              <li>Metformin (for diabetes, if prescribed)</li>
-              <li>Antihypertensives (for high BP, if prescribed)</li>
-              <li>Iron Supplements (for anemia, if prescribed)</li>
-            </ul>
-            <div style={{ color: "#c62828", fontSize: "0.97rem", marginTop: 10, fontWeight: 500 }}>
-              <span>⚠️ Please consult a doctor before taking any of the above medicines.</span>
+                {title}
+              </h3>
+              {Array.isArray(desc) ? (
+                <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
+                  {desc.map((item, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.5em" }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
+                  {desc
+                    .split(",")
+                    .map((item, idx) => (
+                      <li key={idx} style={{ marginBottom: "0.5em" }}>
+                        {item.trim()}
+                      </li>
+                    ))}
+                </ul>
+              )}
             </div>
-          </div>
-          <div style={{
-            backgroundColor: "#f8fafd",
-            borderRadius: "12px",
-            padding: "20px 24px",
-            boxShadow: "0 10px 20px rgba(0,0,0,0.08)",
-            flex: 1,
-            minHeight: 120,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-          }}>
-            <h4 style={{ color: "#0288d1", marginBottom: "8px" }}>Standard Operating Procedures (SOPs)</h4>
-            <ul style={{ margin: 0, paddingLeft: 18, color: "#444", fontSize: "0.98rem" }}>
-              <li>Follow doctor's advice and prescribed medication schedule.</li>
-              <li>Maintain a healthy diet and regular exercise.</li>
-              <li>Monitor symptoms and report any worsening to your doctor.</li>
-              <li>Stay hydrated and avoid self-medication.</li>
-            </ul>
-          </div>
+          ))}
         </div>
+        <style>
+          {`
+            @media (max-width: 700px) {
+              .remedies-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.2rem !important;
+                max-width: 98vw !important;
+              }
+              .remedy-card {
+                padding: 18px 10px !important;
+                font-size: 0.98rem !important;
+              }
+              h2 {
+                font-size: 1.3rem !important;
+              }
+            }
+          `}
+        </style>
       </div>
+      {/* Doctor list */}
       <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
         <button
           style={{

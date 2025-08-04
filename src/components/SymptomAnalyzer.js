@@ -13,6 +13,7 @@ const SymptomAnalyzer = () => {
  const [warning, setWarning] = useState("");
  const [showUploadModal, setShowUploadModal] = useState(false);
  const [reportText, setReportText] = useState("");
+ const [loading, setLoading] = useState(false);
  const navigate = useNavigate();
  useEffect(() => {
    const fetchHistory = async () => {
@@ -45,6 +46,7 @@ const SymptomAnalyzer = () => {
    const token = localStorage.getItem("token");
    const username = localStorage.getItem("username");
    try {
+    setLoading(true);
      const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/symptom/analyze", {
        method: "POST",
        headers: {
@@ -61,6 +63,8 @@ const SymptomAnalyzer = () => {
    } catch (err) {
      console.error("Prediction error:", err);
      setWarning("Failed to analyze symptoms. Please try again.");
+   }finally {
+     setLoading(false);
    }
  };
  return (
@@ -202,7 +206,45 @@ const SymptomAnalyzer = () => {
 </div>
        )}
 </div>
-     {history.length > 0 && (
+{loading && (
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}>
+                  {/* Animated loader icon */}
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 50 50"
+                    style={{ marginBottom: "8px" }}
+                  >
+                    <circle
+                      cx="25"
+                      cy="25"
+                      r="20"
+                      fill="none"
+                      stroke="#0288d1"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeDasharray="31.4 94.2"
+                      strokeDashoffset="0"
+                    >
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 25 25"
+                        to="360 25 25"
+                        dur="1s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </svg>
+                </div>
+              </div>
+            )}
+     {history.length > 0 && !loading &&(
 <div className="chart-container">
 <ChartHistory history={history} />
 </div>
