@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import DoctorList from "./DoctorList";
 const RemediesPage = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const RemediesPage = () => {
 
     setRemedies(cards);
   } 
-  }, []);
+  });
 
 
 
