@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ChartHistory from "./ChartHistory";
+import UploadReportModal from "./UploadReportModal";
 const symptomsList = [
  "Fatigue", "Frequent Urination", "Blurred Vision", "Weight Loss",
  "Swelling", "Shortness Of Breath", "Dizziness", "High Bp", "Headache"
@@ -10,16 +11,16 @@ const SymptomAnalyzer = () => {
  const [predicted, setPredicted] = useState("");
  const [history, setHistory] = useState([]);
  const [warning, setWarning] = useState("");
+ const [showUploadModal, setShowUploadModal] = useState(false);
+ const [reportText, setReportText] = useState("");
  const navigate = useNavigate();
  useEffect(() => {
    const fetchHistory = async () => {
      const username = localStorage.getItem("username");
      const token = localStorage.getItem("token");
      try {
-       const response = await fetch(`https://aidaptcareapi.azurewebsites.net/api/symptom/history/${username}`, {
-         headers: {
-           Authorization: `Bearer ${token}`
-         }
+       const response = await fetch(`http://localhost:5000/api/symptom/history/${username}`, {
+         headers: { Authorization: `Bearer ${token}` }
        });
        if (!response.ok) throw new Error("Failed to fetch history");
        const data = await response.json();
@@ -44,17 +45,17 @@ const SymptomAnalyzer = () => {
    const token = localStorage.getItem("token");
    const username = localStorage.getItem("username");
    try {
-     const response = await fetch("https://aidaptcareapi.azurewebsites.net/api/symptom/analyze", {
+     const response = await fetch("http://localhost:5000/api/symptom/analyze", {
        method: "POST",
        headers: {
          "Content-Type": "application/json",
          Authorization: `Bearer ${token}`
        },
-       body: JSON.stringify({ username, symptoms: selected })
+       body: JSON.stringify({ username, symptoms: selected, reportText })
      });
      if (!response.ok) throw new Error("Failed to analyze");
      const data = await response.json();
-     setPredicted(data.condition);
+     setPredicted(data.predictedCondition);
      setHistory(data.history.slice(-5));
      localStorage.setItem("lastResult", JSON.stringify(data));
    } catch (err) {
@@ -104,26 +105,26 @@ const SymptomAnalyzer = () => {
          marginTop: "1rem"
        }}>
 <button
-  type="button"
-  style={{
-    backgroundColor: "#f57c00",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    padding: "6px 12px", // reduced size
-    fontWeight: "500",
-    fontSize: "0.95rem", // reduced text size
-    cursor: "pointer",
-    transition: "background-color 0.3s ease"
-  }}
-  onClick={() => setSelected(symptomsList)}
-  onMouseEnter={e => (e.target.style.backgroundColor = "#80cc08")}
-  onMouseLeave={e => (e.target.style.backgroundColor = "#71b308ff")}
+           type="button"
+           style={{
+             backgroundColor: "#f57c00",
+             color: "#fff",
+             border: "none",
+             borderRadius: "6px",
+             padding: "6px 12px",
+             fontWeight: "500",
+             fontSize: "0.95rem",
+             cursor: "pointer",
+             transition: "background-color 0.3s ease"
+           }}
+           onClick={() => setSelected(symptomsList)}
+           onMouseEnter={e => (e.target.style.backgroundColor = "#80cc08")}
+           onMouseLeave={e => (e.target.style.backgroundColor = "#71b308ff")}
 >
-  Select All Symptoms
+           Select All Symptoms
 </button>
 <button
-           onClick={() => navigate("/upload-report")}
+           onClick={() => setShowUploadModal(true)}
            style={{
              padding: "10px 20px",
              backgroundColor: "#00796b",
@@ -205,6 +206,12 @@ const SymptomAnalyzer = () => {
 <div className="chart-container">
 <ChartHistory history={history} />
 </div>
+     )}
+     {showUploadModal && (
+<UploadReportModal
+         onClose={() => setShowUploadModal(false)}
+         onReportUploaded={(text) => setReportText(text)}
+       />
      )}
 </div>
  );
