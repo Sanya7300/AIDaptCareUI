@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DoctorList from "./DoctorList";
 const RemediesPage = () => {
-  const { disease } = useParams();
   const navigate = useNavigate();
   const [remedies, setRemedies] = useState([]);
   const [showChat, setShowChat] = useState(false);
@@ -54,7 +53,7 @@ const RemediesPage = () => {
 
     setRemedies(cards);
   } 
-  }, []);
+  }, [lastResult]);
 
 
 
