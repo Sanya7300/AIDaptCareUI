@@ -7,6 +7,24 @@
   pointer-events: none;
 }
 
+.backBtn {
+  position: absolute;
+  top: 6.5rem;
+  left: 3rem;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  color: #2d3a4b;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(31, 38, 135, 0.15);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.3s, color 0.3s;
+  z-index: 2;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
