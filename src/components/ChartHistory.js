@@ -104,7 +104,7 @@ const ChartHistory = ({ history }) => {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
-                     { console.log(data)}
+                      console.log(data)
                       return (
                         <div
                           style={{

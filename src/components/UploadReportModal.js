@@ -33,7 +33,7 @@ const UploadReportModal = ({ onClose }) => {
      });
      const data = await response.json();
      if (response.ok) {
-       setStatus("Analysis completed successfully!");
+       setStatus("Upload completed successfully!");
        setDiagnosis(data.diagnosis || "No diagnosis returned.");
      } else {
        setStatus(`Upload failed: ${data.message || "Unknown error"}`);
@@ -135,25 +135,6 @@ const UploadReportModal = ({ onClose }) => {
          }}>
            {status}
 </p>
-       )}
-       {diagnosis && (
-<div style={{
-           marginTop: "1.5rem",
-           backgroundColor: "#f1f8e9",
-           borderRadius: "8px",
-           border: "1px solid #c5e1a5",
-           padding: "1rem"
-         }}>
-<p style={{ fontWeight: "bold", color: "#2e7d32", marginBottom: "0.5rem" }}>Diagnosis:</p>
-<ul style={{ paddingLeft: "1.2rem", color: "#33691e", margin: 0 }}>
-             {diagnosis
-               .split(/\n|(?<=\d\.)/)
-               .map((item, index) => {
-                 const clean = item.trim().replace(/^[-•\d.\s]*/, "");
-                 return clean ? <li key={index}>{clean}</li> : null;
-               })}
-</ul>
-</div>
        )}
 </div>
 </div>

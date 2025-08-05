@@ -73,7 +73,7 @@ const RemediesPage = () => {
         },
         body: JSON.stringify({
           symptoms: lastResult?.symptoms || [],
-          condition: lastResult?.condition || "unknown",
+          condition: lastResult?.predictedCondition || "unknown",
           question,
         }),
       });
