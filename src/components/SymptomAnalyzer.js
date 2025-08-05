@@ -69,6 +69,12 @@ const SymptomAnalyzer = () => {
  };
  return (
 <div className="page-container">
+   <button
+    onClick={() => navigate(-1)}
+    className="backBtn"
+  >
+    ← Back
+  </button>
 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 <h2>Symptom Analyzer</h2>
 </div>

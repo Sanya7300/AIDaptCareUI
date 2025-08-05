@@ -13,6 +13,7 @@ import UploadReport from "./components/UploadReport";
 import MainPage from "./components/MainPage";
 import Header from "./components/Header";
 import Contact from "./components/Contact";
+import "./App.css"; // Import your CSS file for global styles
 
 
 function App() {
