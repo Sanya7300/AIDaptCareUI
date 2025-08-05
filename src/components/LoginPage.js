@@ -131,7 +131,8 @@ const LoginPage = ({ onLogin }) => {
      localStorage.setItem("token", data.token);
      localStorage.setItem("username", username);
      onLogin({ username });
-     navigate("/symptoms");
+     navigate("/mainpage")
+    // navigate("/symptoms");
    } catch (err) {
      alert("Invalid credentials. Please try again.");
    }

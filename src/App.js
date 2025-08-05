@@ -10,6 +10,7 @@ import SymptomAnalyzer from "./components/SymptomAnalyzer";
 
 import RemediesPage from "./components/RemediesPage";
 import UploadReport from "./components/UploadReport";
+import MainPage from "./components/MainPage";
 import Header from "./components/Header";
 
 
@@ -58,6 +59,7 @@ function App() {
           }
         />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/mainpage" element={<MainPage />} />
         <Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
         <Route path="/remedies/:disease" element={<RemediesPage />} />
         <Route path="/upload-report" element={<UploadReport />} />
