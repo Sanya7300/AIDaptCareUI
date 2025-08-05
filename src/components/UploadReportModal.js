@@ -3,7 +3,6 @@ const UploadReportModal = ({ onClose }) => {
  const [file, setFile] = useState(null);
  const [status, setStatus] = useState("");
  const [isUploading, setIsUploading] = useState(false);
- const [diagnosis, setDiagnosis] = useState("");
  const fileInputRef = useRef();
  const handleFileChange = (e) => {
    setFile(e.target.files[0]);
