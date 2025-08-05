@@ -12,6 +12,7 @@ import RemediesPage from "./components/RemediesPage";
 import UploadReport from "./components/UploadReport";
 import MainPage from "./components/MainPage";
 import Header from "./components/Header";
+import Contact from "./components/Contact";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
         <Route path="/remedies/:disease" element={<RemediesPage />} />
         <Route path="/upload-report" element={<UploadReport />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );

@@ -47,10 +47,10 @@ const MainPage = () => {
                         AIDaptCare
                     </div>
                     <nav>
-                        <a href="#" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Home</a>
-                        <a href="#" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>About</a>
-                        <a href="#" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Services</a>
-                        <a href="#" style={{ color: '#1976d2', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Contact</a>
+                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Home</a>
+                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>About</a>
+                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Services</a>
+                        <a href="/contact" style={{ color: '#1976d2', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Contact</a>
                     </nav>
                 </div>
             </header>
@@ -128,7 +128,7 @@ const MainPage = () => {
                         }
                     />
                 </div>
-            </section>}
+            </section>
             <footer
                 style={{
                     marginTop: 64,

@@ -10,6 +10,7 @@ const ChartHistory = ({ history }) => {
     "Anemia": "#8e24aa",
     "Headache": "#757575", // Use "Headache" instead of "Tension Headache"
     "Migraine": "#27b072ff",
+    "Kidney Disease": "#c2185b",
     "default": "#a2c22fff"
   };
   // Helper to normalize disease name for display and color
@@ -103,6 +104,7 @@ const ChartHistory = ({ history }) => {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
+                     { console.log(data)}
                       return (
                         <div
                           style={{
@@ -143,7 +145,7 @@ const ChartHistory = ({ history }) => {
                                 marginBottom: 2
                               }}
                             >
-                              {data.Disease}
+                              {data.predictedCondition}
                             </strong>
                           </div>
                           <div><strong>Count:</strong> {data.Count}</div>
@@ -217,7 +219,7 @@ const ChartHistory = ({ history }) => {
                                 marginBottom: 2
                               }}
                             >
-                              {data.Disease}
+                              {data.predictedCondition}
                             </strong>
                           </div>
                           <div><strong>Count:</strong> {data.Count}</div>
