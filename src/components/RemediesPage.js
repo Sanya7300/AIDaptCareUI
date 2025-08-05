@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DoctorList from "./DoctorList";
 const RemediesPage = () => {
+  const { disease } = useParams();
   const navigate = useNavigate();
   const [remedies, setRemedies] = useState([]);
   const [showChat, setShowChat] = useState(false);
@@ -53,7 +54,7 @@ const RemediesPage = () => {
 
     setRemedies(cards);
   } 
-  }, [lastResult]);
+  }, []);
 
 
 
@@ -107,106 +108,121 @@ const RemediesPage = () => {
         ← Back
       </button>
       {/* Rendering all cards here */}
-      <div style={{ marginBottom: "2rem" }}>
-        <h2
-          style={{
-            textAlign: "center",
-            color: "#1976d2",
-            fontWeight: "700",
-            fontSize: "2rem",
-            letterSpacing: "1px",
-            marginBottom: "1.5rem",
-            background: "linear-gradient(90deg, #1976d2 0%, #43a047 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          {lastResult?.predictedCondition
-            ? `Remedies & Recommendations for ${lastResult.predictedCondition}`
-            : "Remedies & Recommendations"}
-        </h2>
-        <div
-          className="remedies-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "2rem",
-            minHeight: 400,
-            maxWidth: 900,
-            margin: "0 auto",
-          }}
-        >
-          {remedies.map(({ title, desc }) => (
-            <div
-              key={title}
-              className="remedy-card"
+        <div style={{ marginBottom: "2rem" }}>
+          <h2
+            style={{
+          textAlign: "center",
+          color: "#1976d2",
+          fontWeight: "700",
+          fontSize: "2rem",
+          letterSpacing: "1px",
+          marginBottom: "1.5rem",
+          background: "linear-gradient(90deg, #1976d2 0%, #43a047 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+            }}
+          >
+            {lastResult?.predictedCondition
+          ? `Remedies & Recommendations for ${lastResult.predictedCondition}`
+          : "Remedies & Recommendations"}
+          </h2>
+          <div
+            className="remedies-grid"
+            style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "2rem",
+          minHeight: 400,
+          maxWidth: 900,
+          margin: "0 auto",
+            }}
+          >
+            {remedies.map(({ title, desc }) => (
+          <div
+            key={title}
+            className="remedy-card"
+            style={{
+              backgroundColor: "white",
+              borderRadius: "16px",
+              padding: "28px 24px",
+              boxShadow: "0 8px 24px rgba(25, 118, 210, 0.10)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              minHeight: "unset",
+              border: "3px solid transparent",
+              backgroundImage:
+            "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              transition: "box-shadow 0.2s",
+              height: "auto",
+            }}
+          >
+            <h3
               style={{
-                backgroundColor: "white",
-                borderRadius: "16px",
-                padding: "28px 24px",
-                boxShadow: "0 8px 24px rgba(25, 118, 210, 0.10)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                minHeight: "unset",
-                border: "1.5px solid #e3eafc",
-                transition: "box-shadow 0.2s",
-                height: "auto",
+            color: "#1976d2",
+            marginBottom: "12px",
+            fontWeight: "600",
+            fontSize: "1.2rem",
+            letterSpacing: "0.5px",
               }}
             >
-              <h3
-                style={{
-                  color: "#1976d2",
-                  marginBottom: "12px",
-                  fontWeight: "600",
-                  fontSize: "1.2rem",
-                  letterSpacing: "0.5px",
-                }}
-              >
-                {title}
-              </h3>
-              {Array.isArray(desc) ? (
-                <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
-                  {desc.map((item, idx) => (
-                    <li key={idx} style={{ marginBottom: "0.5em" }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
-                  {desc
-                    .split(",")
-                    .map((item, idx) => (
-                      <li key={idx} style={{ marginBottom: "0.5em" }}>
-                        {item.trim()}
-                      </li>
-                    ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-        <style>
-          {`
-            @media (max-width: 700px) {
-              .remedies-grid {
-                grid-template-columns: 1fr !important;
-                gap: 1.2rem !important;
-                max-width: 98vw !important;
-              }
-              .remedy-card {
-                padding: 18px 10px !important;
-                font-size: 0.98rem !important;
-              }
-              h2 {
-                font-size: 1.3rem !important;
-              }
+              {title}
+            </h3>
+            {Array.isArray(desc) ? (
+              <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
+            {desc.map((item, idx) => (
+              <li key={idx} style={{ marginBottom: "0.5em" }}>
+                {item}
+              </li>
+            ))}
+              </ul>
+            ) : (
+              <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
+            {desc
+              .split(",")
+              .map((item, idx) => (
+                <li key={idx} style={{ marginBottom: "0.5em" }}>
+              {item.trim()}
+                </li>
+              ))}
+              </ul>
+            )}
+          </div>
+            ))}
+          </div>
+          <style>
+            {`
+          @media (max-width: 700px) {
+            .remedies-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1.2rem !important;
+              max-width: 98vw !important;
             }
-          `}
-        </style>
-      </div>
-      {/* Doctor list */}
+            .remedy-card {
+              padding: 18px 10px !important;
+              font-size: 0.98rem !important;
+            }
+            h2 {
+              font-size: 1.3rem !important;
+            }
+          }
+          .remedy-card {
+            border: 3px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.10);
+            transition: box-shadow 0.2s;
+          }
+          .remedy-card:hover {
+            box-shadow: 0 12px 32px rgba(25, 118, 210, 0.18);
+          }
+            `}
+          </style>
+        </div>
+        {/* Doctor list */}
       <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
         <button
           style={{

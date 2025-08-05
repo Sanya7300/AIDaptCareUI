@@ -26,6 +26,30 @@ const ChartHistory = ({ history }) => {
 
   // Responsive: stack chart and legend on mobile, fix color cell rendering
   const isMobile = typeof window !== "undefined" && window.innerWidth < 700;
+  // Helper to format remedies: show up to 3, then "...more" if more exist
+  const formatRemedies = (remedies) => {
+    if (!remedies) return "";
+    const arr = Array.isArray(remedies) ? remedies : remedies.split(",");
+    const trimmed = arr.map(r => r.trim()).filter(Boolean);
+    if (trimmed.length <= 3) {
+      return (
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          {trimmed.map((rem, idx) => (
+            <li key={idx}>{rem}</li>
+          ))}
+        </ul>
+      );
+    }
+    return (
+      <ul style={{ margin: 0, paddingLeft: 18 }}>
+        {trimmed.slice(0, 3).map((rem, idx) => (
+          <li key={idx}>{rem}</li>
+        ))}
+        <li style={{ color: "#1976d2", cursor: "pointer", listStyle: "none", paddingLeft: 0 }}>...more</li>
+      </ul>
+    );
+  };
+
   return (
     <div style={{ marginTop: "2rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
@@ -80,11 +104,51 @@ const ChartHistory = ({ history }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
-                          <strong>{data.Disease}</strong>
-                          <div>Count: {data.Count}</div>
-                          <div>Symptoms: {data.Symptoms}</div>
-                          <div>Remedies: {data.Remedies}</div>
+                        <div
+                          style={{
+                            background: "#fff",
+                            border: "1px solid #ccc",
+                            padding: 12,
+                            borderRadius: 8,
+                            minWidth: 180,
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.07)"
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              marginBottom: 8
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-block",
+                                width: 38,
+                                height: 38,
+                                borderRadius: "50%",
+                                background: data.fill,
+                                marginBottom: 6,
+                                border: "2px solid #eee"
+                              }}
+                            />
+                            <strong
+                              style={{
+                                fontSize: "1.1rem",
+                                color: "#222",
+                                background: `${data.fill}22`,
+                                padding: "4px 12px",
+                                borderRadius: 12,
+                                marginBottom: 2
+                              }}
+                            >
+                              {data.Disease}
+                            </strong>
+                          </div>
+                          <div><strong>Count:</strong> {data.Count}</div>
+                          <div><strong>Symptoms:</strong> {data.Symptoms}</div>
+                          <div><strong>Remedies:</strong> {formatRemedies(data.Remedies)}</div>
                         </div>
                       );
                     }
@@ -114,11 +178,51 @@ const ChartHistory = ({ history }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div style={{ background: "#fff", border: "1px solid #ccc", padding: 10 }}>
-                          <strong>{data.Disease}</strong>
-                          <div>Count: {data.Count}</div>
-                          <div>Symptoms: {data.Symptoms}</div>
-                          <div>Remedies: {data.Remedies}</div>
+                        <div
+                          style={{
+                            background: "#fff",
+                            border: "1px solid #ccc",
+                            padding: 12,
+                            borderRadius: 8,
+                            minWidth: 180,
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.07)"
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              marginBottom: 8
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-block",
+                                width: 38,
+                                height: 38,
+                                borderRadius: "50%",
+                                background: data.fill,
+                                marginBottom: 6,
+                                border: "2px solid #eee"
+                              }}
+                            />
+                            <strong
+                              style={{
+                                fontSize: "1.1rem",
+                                color: "#222",
+                                background: `${data.fill}22`,
+                                padding: "4px 12px",
+                                borderRadius: 12,
+                                marginBottom: 2
+                              }}
+                            >
+                              {data.Disease}
+                            </strong>
+                          </div>
+                          <div><strong>Count:</strong> {data.Count}</div>
+                          <div><strong>Symptoms:</strong> {data.Symptoms}</div>
+                          <div><strong>Remedies:</strong> {formatRemedies(data.Remedies)}</div>
                         </div>
                       );
                     }
