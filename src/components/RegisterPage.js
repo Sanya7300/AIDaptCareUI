@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import backgroundImage from "../images/aidaptcare.png"; // Import your image
+
 // Background gradient animation (same as LoginPage)
+
+const headingStyle = {
+  backgroundImage: "linear-gradient(90deg, #80cc08 0%, #2575fc 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text",
+  textFillColor: "transparent",
+};
 const backgroundStyle = {
   minHeight: "100vh",
   width: "100vw",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "linear-gradient(135deg, #ff6a00 0%, #ee0979 40%, #00c3ff 80%, #fff200 100%)",
-  backgroundSize: "400% 400%",
-  animation: "shineBG 10s ease-in-out infinite",
+  backgroundImage: `url(${backgroundImage})`, // Use backgroundImage
+  backgroundSize: "cover", // Or "contain" depending on your needs
+  backgroundRepeat: "no-repeat",
   position: "relative",
 };
 if (!document.getElementById("register-shineBG")) {
@@ -77,7 +87,7 @@ const buttonStyle = {
   padding: "0.9rem",
   borderRadius: "10px",
   border: "none",
-  background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+  background: "linear-gradient(90deg, #80cc08 0%, #2575fc 100%)",
   color: "#fff",
   fontWeight: "bold",
   fontSize: "1rem",
@@ -129,7 +139,7 @@ const RegisterPage = () => {
               textAlign: "center"
             }}
           >
-            {isMobile ? "Register for AIDaptCare" : (<><span>Register for</span><br /><span>AIDaptCare</span></>)}
+            {isMobile ? "Register for AIDaptCare" : (<><span style={headingStyle}>Register for</span><br /><span style={headingStyle}>AIDaptCare</span></>)}
           </h2>
           <input
             type="text"
