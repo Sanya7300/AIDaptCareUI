@@ -173,7 +173,7 @@ const RemediesPage = () => {
               <ul style={{ color: "#444", fontSize: "1rem", paddingLeft: "1.2rem", margin: 0 }}>
             {desc.map((item, idx) => (
               <li key={idx} style={{ marginBottom: "0.5em" }}>
-                {item}
+          {item.replace(/:/g, "")}
               </li>
             ))}
               </ul>
@@ -182,9 +182,9 @@ const RemediesPage = () => {
             {desc
               .split(",")
               .map((item, idx) => (
-                <li key={idx} style={{ marginBottom: "0.5em" }}>
-              {item.trim()}
-                </li>
+          <li key={idx} style={{ marginBottom: "0.5em" }}>
+              {item.trim().replace(/:/g, "")}
+          </li>
               ))}
               </ul>
             )}
