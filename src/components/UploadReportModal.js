@@ -7,7 +7,6 @@ const UploadReportModal = ({ onClose }) => {
  const handleFileChange = (e) => {
    setFile(e.target.files[0]);
    setStatus("");
-   setDiagnosis("");
  };
  const handleFileButtonClick = () => {
    fileInputRef.current.click();
@@ -33,7 +32,6 @@ const UploadReportModal = ({ onClose }) => {
      const data = await response.json();
      if (response.ok) {
        setStatus("Upload completed successfully!");
-       setDiagnosis(data.diagnosis || "No diagnosis returned.");
      } else {
        setStatus(`Upload failed: ${data.message || "Unknown error"}`);
      }
