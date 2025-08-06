@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Example AIDaptCard component
 const AIDaptCard = ({ name, info }) => (
@@ -16,6 +17,7 @@ const AIDaptCard = ({ name, info }) => (
 );
 
 const MainPage = () => {
+    const navigate = useNavigate();
     return (
         <div
             style={{
@@ -90,7 +92,7 @@ const MainPage = () => {
                             cursor: 'pointer',
                             boxShadow: '0 2px 8px rgba(25,118,210,0.08)',
                         }}
-                        onClick={() => window.location.href = '/symptoms'}
+                        onClick={()=>navigate("/symptoms")}
                     >
                         Get Started
                     </button>
