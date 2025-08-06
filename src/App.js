@@ -48,24 +48,24 @@ function App() {
 
   return (
     <Router>
-      {user && <Header onLogout={handleLogout} />}
+      {user && <Header user={user} onLogout={handleLogout} />}
       <Routes>
-        <Route
-          path="/"
-          element={
-            user ? (
-              <SymptomAnalyzer user={user} onLogout={handleLogout} />
-            ) : (
-              <LoginPage onLogin={handleLogin} />
-            )
-          }
-        />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/mainpage" element={<MainPage />} />
-        <Route path="/symptoms" element={<SymptomAnalyzer user={user} onLogout={handleLogout} />} />
-        <Route path="/remedies/:disease" element={<RemediesPage />} />
-        <Route path="/upload-report" element={<UploadReport />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/" element={<LoginPage onLogin={handleLogin} />} />
+        {!user ? (
+          <>
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </>
+        ) : (
+          <>
+            <Route path="/mainpage" element={<MainPage />} />
+            <Route path="/symptoms" element={<SymptomAnalyzer />} />
+            <Route path="/remedies/:disease" element={<RemediesPage />} />
+            <Route path="/upload-report" element={<UploadReport />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<MainPage />} />
+          </>
+        )}
       </Routes>
     </Router>
   );
