@@ -22,13 +22,44 @@ const ChartHistory = ({ history }) => {
   // Prepare chart data according to viewMode
   let chartData = [];
   if (viewMode === "disease") {
-    chartData = history.map((entry, index) => ({
-      name: `#${index + 1}`,
-      Disease: entry.predictedCondition,
-      Count: entry.count || 1,
-      Symptoms: Array.isArray(entry.symptoms) ? entry.symptoms.join(", ") : entry.symptoms,
-      Remedies: Array.isArray(entry.remedies) ? entry.remedies.join(", ") : entry.remedies,
-      fill: diseaseColors[entry.predictedCondition] || diseaseColors.default
+    // Aggregate disease counts
+    const diseaseMap = {};
+    history.forEach(entry => {
+      const disease = entry.predictedCondition;
+      if (!disease) return;
+      if (!diseaseMap[disease]) {
+        diseaseMap[disease] = {
+          Disease: disease,
+          Count: 0,
+          Symptoms: [],
+          Remedies: [],
+          fill: diseaseColors[disease] || diseaseColors.default
+        };
+      }
+      diseaseMap[disease].Count += entry.count || 1;
+      // Optionally aggregate symptoms/remedies for tooltip
+      if (entry.symptoms) {
+        if (Array.isArray(entry.symptoms)) {
+          diseaseMap[disease].Symptoms.push(...entry.symptoms);
+        } else {
+          diseaseMap[disease].Symptoms.push(...entry.symptoms.split(","));
+        }
+      }
+      if (entry.remedies) {
+        if (Array.isArray(entry.remedies)) {
+          diseaseMap[disease].Remedies.push(...entry.remedies);
+        } else {
+          diseaseMap[disease].Remedies.push(...entry.remedies.split(","));
+        }
+      }
+    });
+    chartData = Object.values(diseaseMap).map((d, idx) => ({
+      name: d.Disease,
+      Disease: d.Disease,
+      Count: d.Count,
+      Symptoms: d.Symptoms.join(", "),
+      Remedies: d.Remedies.join(", "),
+      fill: d.fill
     }));
   } else if (viewMode === "symptoms") {
     // Flatten all symptoms and count occurrences
