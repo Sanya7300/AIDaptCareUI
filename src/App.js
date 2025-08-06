@@ -14,6 +14,8 @@ import MainPage from "./components/MainPage";
 import Header from "./components/Header";
 import Contact from "./components/Contact";
 import "./App.css"; // Import your CSS file for global styles
+import Services from "./components/Services";
+import About from "./components/About";
 
 
 function App() {
@@ -63,6 +65,8 @@ function App() {
             <Route path="/remedies/:disease" element={<RemediesPage />} />
             <Route path="/upload-report" element={<UploadReport />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<MainPage />} />
           </>
         )}

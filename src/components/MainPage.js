@@ -56,10 +56,70 @@ const MainPage = () => {
                             gap: '12px',
                         }}
                     >
-                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Home</a>
-                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>About</a>
-                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Services</a>
-                        <a href="/contact" style={{ color: '#1976d2', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Contact</a>
+                        <button
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#333',
+                                margin: '0 8px',
+                                textDecoration: 'none',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                fontSize: 'inherit',
+                                padding: 0,
+                            }}
+                            onClick={() => navigate("/mainpage")}
+                        >
+                            Home
+                        </button>
+                        <button
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#333',
+                                margin: '0 8px',
+                                textDecoration: 'none',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                fontSize: 'inherit',
+                                padding: 0,
+                            }}
+                            onClick={() => navigate("/about")}
+                        >
+                            About
+                        </button>
+                        <button
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#333',
+                                margin: '0 8px',
+                                textDecoration: 'none',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                fontSize: 'inherit',
+                                padding: 0,
+                            }}
+                            onClick={() => navigate("/services")}
+                        >
+                            Services
+                        </button>
+                        <button
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#1976d2',
+                                margin: '0 8px',
+                                textDecoration: 'none',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                fontSize: 'inherit',
+                                padding: 0,
+                            }}
+                            onClick={() => navigate("/contact")}
+                        >
+                            Contact
+                        </button>
                     </nav>
                 </div>
             </header>
