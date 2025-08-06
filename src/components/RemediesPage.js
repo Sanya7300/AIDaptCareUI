@@ -278,44 +278,41 @@ const RemediesPage = () => {
         </style>
         {/* Modal */}
       {selectedCard && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(0,0,0,0.6)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-            animation: "fadeIn 0.3s ease"
-          }}
-          onClick={() => setSelectedCard(null)}
-        >
-          <div
-            style={{
-              background: "white",
-              borderRadius: "14px",
-              padding: "25px",
-              width: "90vw",
-              maxWidth: "550px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-              border: "3px solid transparent",
-              backgroundImage:
-                "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
-              backgroundOrigin: "border-box",
-              backgroundClip: "padding-box, border-box",
-              animation: "scaleUp 0.3s ease",
-              position: "relative",
-              // Center for mobile screens
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)"
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "rgba(0,0,0,0.6)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+      animation: "fadeIn 0.3s ease"
+    }}
+    onClick={() => setSelectedCard(null)}
+  >
+    <div
+      style={{
+        background: "white",
+        borderRadius: "14px",
+        padding: "25px",
+        width: "90vw",
+        maxWidth: "550px",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+        border: "3px solid transparent",
+        backgroundImage:
+          "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
+        backgroundOrigin: "border-box",
+        backgroundClip: "padding-box, border-box",
+        animation: "scaleUp 0.3s ease",
+        position: "relative",
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
+
             <h3 style={{ marginBottom: "15px", color: "#1976d2" }}>
               {selectedCard.title}
             </h3>
