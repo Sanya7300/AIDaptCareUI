@@ -60,7 +60,7 @@ const MainPage = () => {
                             style={{
                                 background: 'none',
                                 border: 'none',
-                                color: '#333',
+                                color: '#1976d2',
                                 margin: '0 8px',
                                 textDecoration: 'none',
                                 fontWeight: 500,
@@ -108,7 +108,7 @@ const MainPage = () => {
                             style={{
                                 background: 'none',
                                 border: 'none',
-                                color: '#1976d2',
+                                color: '#333',
                                 margin: '0 8px',
                                 textDecoration: 'none',
                                 fontWeight: 500,
