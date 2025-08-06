@@ -267,119 +267,136 @@ const RemediesPage = () => {
         ))}
       </div>
       {/* Modal */}
-      {selectedCard && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.6)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-            animation: "fadeIn 0.3s ease"
-          }}
-          onClick={() => setSelectedCard(null)}
-        >
+        {selectedCard && (
           <div
             style={{
-              background: "white",
-              borderRadius: "14px",
-              padding: "25px",
-              width: "90%",
-              maxWidth: "550px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-              border: "3px solid transparent",
-              backgroundImage:
-                "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
-              backgroundOrigin: "border-box",
-              backgroundClip: "padding-box, border-box",
-              animation: "scaleUp 0.3s ease"
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000,
+          animation: "fadeIn 0.3s ease"
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => setSelectedCard(null)}
           >
-            <h3 style={{ marginBottom: "15px", color: "#1976d2" }}>
-              {selectedCard.title}
-            </h3>
-            <button
-              onClick={() => {
-                speakText(
-                  Array.isArray(selectedCard.desc)
-                    ? selectedCard.desc.join(", ")
-                    : typeof selectedCard.desc === "string"
-                      ? selectedCard.desc
-                      : ""
-                );
-              }}
-              style={{
-                background: "#4CAF50",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                padding: "6px 12px",
-                marginBottom: "15px",
-                cursor: "pointer",
-                fontSize: "0.9rem"
-              }}
+            <div
+          style={{
+            background: "white",
+            borderRadius: "14px",
+            padding: "25px",
+            width: "90%",
+            maxWidth: "550px",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+            border: "3px solid transparent",
+            backgroundImage:
+              "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
+            backgroundOrigin: "border-box",
+            backgroundClip: "padding-box, border-box",
+            animation: "scaleUp 0.3s ease"
+          }}
+          onClick={(e) => e.stopPropagation()}
             >
-              🔊 Listen
-            </button>
-            <div style={{ color: "#444", fontSize: "1rem" }}>
-              {Array.isArray(selectedCard.desc) ? (
-                <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
-                  {selectedCard.desc.map((item, idx) => (
-                    <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              ) : typeof selectedCard.desc === "string" ? (
-                <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
-                  {selectedCard.desc.split(/[\n,]/).map((line, idx) => (
-                    <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
-                      {line.trim()}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                selectedCard.desc
-              )}
-            </div>
-            <button
-              onClick={() => setSelectedCard(null)}
-              style={{
-                marginTop: "20px",
-                background: "#f44336",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                padding: "10px 18px",
-                cursor: "pointer",
-                fontWeight: "bold"
-              }}
-            >
-              Close
-            </button>
+          <h3 style={{ marginBottom: "15px", color: "#1976d2" }}>
+            {selectedCard.title}
+          </h3>
+          {/* Alert for Medicines */}
+                {selectedCard.title === "Medicines" && (
+                <div
+                  style={{
+                  background: "#ffebee", // light red
+                  color: "#b71c1c", // dark red
+                  border: "1px solid #f44336",
+                  borderRadius: "6px",
+                  padding: "10px 16px",
+                  marginBottom: "15px",
+                  fontWeight: "500",
+                  fontSize: "1rem"
+                  }}
+                >
+                  ⚠️ Please consult a doctor before taking any recommended medicine.
+                </div>
+                )}
+                <button
+                onClick={() => {
+              speakText(
+            Array.isArray(selectedCard.desc)
+              ? selectedCard.desc.join(", ")
+              : typeof selectedCard.desc === "string"
+                ? selectedCard.desc
+                : ""
+              );
+            }}
+            style={{
+              background: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              padding: "6px 12px",
+              marginBottom: "15px",
+              cursor: "pointer",
+              fontSize: "0.9rem"
+            }}
+          >
+            🔊 Listen
+          </button>
+          <div style={{ color: "#444", fontSize: "1rem" }}>
+            {Array.isArray(selectedCard.desc) ? (
+              <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
+            {selectedCard.desc.map((item, idx) => (
+              <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
+                {item}
+              </li>
+            ))}
+              </ul>
+            ) : typeof selectedCard.desc === "string" ? (
+              <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
+            {selectedCard.desc.split(/[\n,]/).map((line, idx) => (
+              <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
+                {line.trim()}
+              </li>
+            ))}
+              </ul>
+            ) : (
+              selectedCard.desc
+            )}
           </div>
-          {/* Animations */}
-          <style>
-            {`
-       @keyframes fadeIn {
-         from { opacity: 0; }
-         to { opacity: 1; }
-       }
-       @keyframes scaleUp {
-         from { transform: scale(0.8); opacity: 0; }
-         to { transform: scale(1); opacity: 1; }
-       }
-     `}
-          </style>
-        </div>
-      )}
-      {/* Doctor & Chatbot Buttons */}
+          <button
+            onClick={() => setSelectedCard(null)}
+            style={{
+              marginTop: "20px",
+              background: "#f44336",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              padding: "10px 18px",
+              cursor: "pointer",
+              fontWeight: "bold"
+            }}
+          >
+            Close
+          </button>
+            </div>
+            {/* Animations */}
+            <style>
+          {`
+         @keyframes fadeIn {
+           from { opacity: 0; }
+           to { opacity: 1; }
+         }
+         @keyframes scaleUp {
+           from { transform: scale(0.8); opacity: 0; }
+           to { transform: scale(1); opacity: 1; }
+         }
+           `}
+            </style>
+          </div>
+        )}
+        {/* Doctor & Chatbot Buttons */}
       <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
         <button
           style={{
