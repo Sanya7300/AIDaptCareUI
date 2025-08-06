@@ -17,7 +17,7 @@ const RemediesPage = () => {
     "Medicines": "https://thumbs.dreamstime.com/b/clean-informative-image-featuring-pill-bottle-capsules-spilling-out-background-completely-white-which-helps-to-378267684.jpg",
     "Tests": "https://oneaestheticsclinic.com/wp-content/uploads/2024/09/Untitled-design-2024-09-30T093840.756-1024x1024.webp",
     "Diagnosis": "https://media.licdn.com/dms/image/v2/C5112AQF3TYfMKPlJdQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1573310889137?e=2147483647&v=beta&t=MWUwApHhNhiKiayYi2FSCNjlcYd6bhy3xHYws4czXTA",
-    " ": "https://www.theaestheticfoundation.org/_next/image?url=https:%2F%2Fimages.ctfassets.net%2Fazjqjrnb1bv8%2F3o8aaxRTjwYiT2hT9WWK7Z%2Fe5f0e6f5788f2fa6e7548bd834583df5%2FGettyImages-500536318.jpg&w=3840&q=75"
+    "Research": "https://www.theaestheticfoundation.org/_next/image?url=https:%2F%2Fimages.ctfassets.net%2Fazjqjrnb1bv8%2F3o8aaxRTjwYiT2hT9WWK7Z%2Fe5f0e6f5788f2fa6e7548bd834583df5%2FGettyImages-500536318.jpg&w=3840&q=75"
   };
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
