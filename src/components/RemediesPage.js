@@ -178,225 +178,247 @@ const RemediesPage = () => {
           : "Remedies & Recommendations"}
       </h2>
       {/* Card Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(250px, 1fr))",
-          gap: "20px",
-          marginBottom: "2rem"
-        }}
-      >
-        {remedies.map((card, idx) => (
-          <div
-            key={idx}
-            style={{
-              position: "relative",
-              borderRadius: "16px",
-              overflow: "hidden",
-              minHeight: "320px",
-              border: "3px solid transparent",
-              backgroundImage:
-                "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
-              backgroundOrigin: "border-box",
-              backgroundClip: "padding-box, border-box",
-              transition: "transform 0.3s ease",
-              cursor: "pointer"
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          >
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                speakText(
-                  Array.isArray(card.desc)
-                    ? card.desc.join(", ")
-                    : typeof card.desc === "string"
-                      ? card.desc
-                      : ""
-                );
-              }}
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                background: "rgba(255, 255, 255, 0.8)",
-                border: "none",
-                borderRadius: "50%",
-                padding: "8px",
-                cursor: "pointer",
-                fontSize: "1.2rem",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
-              }}
-            >
-              🔊
-            </button>
-            <img
-              src={cardImages[card.title] || cardImages.Condition}
-              alt={card.title}
-              style={{
-                width: "100%",
-                height: "260px",
-                objectFit: "cover",
-                filter: "brightness(0.85)"
-              }}
-            />
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedCard(card);
-              }}
-              style={{
-                position: "absolute",
-                bottom: "10px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "#1976d2",
-                color: "white",
-                border: "none",
-                borderRadius: "20px",
-                padding: "10px 24px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
-              }}
-            >
-              {card.title}
-            </button>
-          </div>
-        ))}
-      </div>
-      {/* Modal */}
-        {selectedCard && (
-          <div
-            style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background: "rgba(0,0,0,0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1000,
-          animation: "fadeIn 0.3s ease"
-            }}
-            onClick={() => setSelectedCard(null)}
-          >
-            <div
+        <div
           style={{
-            background: "white",
-            borderRadius: "14px",
-            padding: "25px",
-            width: "90%",
-            maxWidth: "550px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+            display: "grid",
+            gridTemplateColumns: "repeat(3, minmax(250px, 1fr))",
+            gap: "20px",
+            marginBottom: "2rem"
+          }}
+        >
+          {remedies.map((card, idx) => (
+            <div
+          key={idx}
+          style={{
+            position: "relative",
+            borderRadius: "16px",
+            overflow: "hidden",
+            minHeight: "320px",
             border: "3px solid transparent",
             backgroundImage:
               "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
             backgroundOrigin: "border-box",
             backgroundClip: "padding-box, border-box",
-            animation: "scaleUp 0.3s ease"
+            transition: "transform 0.3s ease",
+            cursor: "pointer"
           }}
-          onClick={(e) => e.stopPropagation()}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
-          <h3 style={{ marginBottom: "15px", color: "#1976d2" }}>
-            {selectedCard.title}
-          </h3>
-          {/* Alert for Medicines */}
-                {selectedCard.title === "Medicines" && (
-                <div
-                  style={{
-                  background: "#ffebee", // light red
-                  color: "#b71c1c", // dark red
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              speakText(
+            Array.isArray(card.desc)
+              ? card.desc.join(", ")
+              : typeof card.desc === "string"
+                ? card.desc
+                : ""
+              );
+            }}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              background: "rgba(255, 255, 255, 0.8)",
+              border: "none",
+              borderRadius: "50%",
+              padding: "8px",
+              cursor: "pointer",
+              fontSize: "1.2rem",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+            }}
+          >
+            🔊
+          </button>
+          <img
+            src={cardImages[card.title] || cardImages.Condition}
+            alt={card.title}
+            style={{
+              width: "100%",
+              height: "260px",
+              objectFit: "cover",
+              filter: "brightness(0.85)"
+            }}
+          />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedCard(card);
+            }}
+            style={{
+              position: "absolute",
+              bottom: "10px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "#1976d2",
+              color: "white",
+              border: "none",
+              borderRadius: "20px",
+              padding: "10px 24px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
+            }}
+          >
+            {card.title}
+          </button>
+            </div>
+          ))}
+        </div>
+        {/* Responsive CSS for Card Grid */}
+        <style>
+          {`
+            @media (max-width: 700px) {
+          .page-container > div[style*="display: grid"] {
+            grid-template-columns: 1fr !important;
+          }
+            }
+          `}
+        </style>
+        {/* Modal */}
+      {selectedCard && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+            animation: "fadeIn 0.3s ease"
+          }}
+          onClick={() => setSelectedCard(null)}
+        >
+          <div
+            style={{
+              background: "white",
+              borderRadius: "14px",
+              padding: "25px",
+              width: "90vw",
+              maxWidth: "550px",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+              border: "3px solid transparent",
+              backgroundImage:
+                "linear-gradient(white, white), linear-gradient(120deg, #1976d2, #43a047, #ffd600, #1976d2)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              animation: "scaleUp 0.3s ease",
+              position: "relative",
+              // Center for mobile screens
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)"
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ marginBottom: "15px", color: "#1976d2" }}>
+              {selectedCard.title}
+            </h3>
+            {/* Alert for Medicines */}
+            {selectedCard.title === "Medicines" && (
+              <div
+                style={{
+                  background: "#ffebee",
+                  color: "#b71c1c",
                   border: "1px solid #f44336",
                   borderRadius: "6px",
                   padding: "10px 16px",
                   marginBottom: "15px",
                   fontWeight: "500",
                   fontSize: "1rem"
-                  }}
-                >
-                  ⚠️ Please consult a doctor before taking any recommended medicine.
-                </div>
-                )}
-                <button
-                onClick={() => {
-              speakText(
-            Array.isArray(selectedCard.desc)
-              ? selectedCard.desc.join(", ")
-              : typeof selectedCard.desc === "string"
-                ? selectedCard.desc
-                : ""
-              );
-            }}
-            style={{
-              background: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              padding: "6px 12px",
-              marginBottom: "15px",
-              cursor: "pointer",
-              fontSize: "0.9rem"
-            }}
-          >
-            🔊 Listen
-          </button>
-          <div style={{ color: "#444", fontSize: "1rem" }}>
-            {Array.isArray(selectedCard.desc) ? (
-              <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
-            {selectedCard.desc.map((item, idx) => (
-              <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
-                {item}
-              </li>
-            ))}
-              </ul>
-            ) : typeof selectedCard.desc === "string" ? (
-              <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
-            {selectedCard.desc.split(/[\n,]/).map((line, idx) => (
-              <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
-                {line.trim()}
-              </li>
-            ))}
-              </ul>
-            ) : (
-              selectedCard.desc
+                }}
+              >
+                ⚠️ Please consult a doctor before taking any recommended medicine.
+              </div>
             )}
-          </div>
-          <button
-            onClick={() => setSelectedCard(null)}
-            style={{
-              marginTop: "20px",
-              background: "#f44336",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              padding: "10px 18px",
-              cursor: "pointer",
-              fontWeight: "bold"
-            }}
-          >
-            Close
-          </button>
+            <button
+              onClick={() => {
+                speakText(
+                  Array.isArray(selectedCard.desc)
+                    ? selectedCard.desc.join(", ")
+                    : typeof selectedCard.desc === "string"
+                    ? selectedCard.desc
+                    : ""
+                );
+              }}
+              style={{
+                background: "#4CAF50",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                padding: "6px 12px",
+                marginBottom: "15px",
+                cursor: "pointer",
+                fontSize: "0.9rem"
+              }}
+            >
+              🔊 Listen
+            </button>
+            <div style={{ color: "#444", fontSize: "1rem" }}>
+              {Array.isArray(selectedCard.desc) ? (
+                <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
+                  {selectedCard.desc.map((item, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              ) : typeof selectedCard.desc === "string" ? (
+                <ul style={{ paddingLeft: "1.2rem", margin: 0 }}>
+                  {selectedCard.desc.split(/[\n,]/).map((line, idx) => (
+                    <li key={idx} style={{ marginBottom: "0.5em", lineHeight: "1.5" }}>
+                      {line.trim()}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                selectedCard.desc
+              )}
             </div>
-            {/* Animations */}
-            <style>
-          {`
-         @keyframes fadeIn {
-           from { opacity: 0; }
-           to { opacity: 1; }
-         }
-         @keyframes scaleUp {
-           from { transform: scale(0.8); opacity: 0; }
-           to { transform: scale(1); opacity: 1; }
-         }
-           `}
-            </style>
+            <button
+              onClick={() => setSelectedCard(null)}
+              style={{
+                marginTop: "20px",
+                background: "#f44336",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                padding: "10px 18px",
+                cursor: "pointer",
+                fontWeight: "bold"
+              }}
+            >
+              Close
+            </button>
           </div>
-        )}
-        {/* Doctor & Chatbot Buttons */}
+          {/* Animations */}
+          <style>
+            {`
+              @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+              }
+              @keyframes scaleUp {
+                from { transform: scale(0.8); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+              }
+              @media (max-width: 600px) {
+                .modal-center {
+                  width: 98vw !important;
+                  max-width: 98vw !important;
+                  padding: 12px !important;
+                }
+              }
+            `}
+          </style>
+        </div>
+      )}
+      {/* Doctor & Chatbot Buttons */}
       <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "2rem" }}>
         <button
           style={{

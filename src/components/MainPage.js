@@ -43,26 +43,34 @@ const MainPage = () => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '0 32px',
+                        flexWrap: 'wrap',
                     }}
                 >
                     <div style={{ fontWeight: 700, fontSize: 28, color: '#1976d2', letterSpacing: 1 }}>
                         AIDaptCare
                     </div>
-                    <nav>
-                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Home</a>
-                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>About</a>
-                        <a href="/contact" style={{ color: '#333', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Services</a>
-                        <a href="/contact" style={{ color: '#1976d2', margin: '0 18px', textDecoration: 'none', fontWeight: 500 }}>Contact</a>
+                    <nav
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '12px',
+                        }}
+                    >
+                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Home</a>
+                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>About</a>
+                        <a href="/contact" style={{ color: '#333', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Services</a>
+                        <a href="/contact" style={{ color: '#1976d2', margin: '0 8px', textDecoration: 'none', fontWeight: 500 }}>Contact</a>
                     </nav>
                 </div>
             </header>
 
-           { /* Hero Section */}
+            {/* Hero Section */}
             <section
                 style={{
                     maxWidth: '1100px',
                     margin: '0 auto',
                     display: 'flex',
+                    flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '32px',
@@ -71,13 +79,30 @@ const MainPage = () => {
                     boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
                     position: 'relative',
                     zIndex: 1,
+                    flexWrap: 'wrap',
                 }}
             >
-                <div style={{ flex: 1, paddingRight: 48 }}>
-                    <h1 style={{ fontSize: 40, color: '#1976d2', marginBottom: 18, fontWeight: 700 }}>
+                <div
+                    style={{
+                        flex: 1,
+                        paddingRight: 48,
+                        minWidth: 260,
+                        marginBottom: '24px',
+                    }}
+                >
+                    <h1 style={{
+                        fontSize: 'clamp(28px, 6vw, 40px)',
+                        color: '#1976d2',
+                        marginBottom: 18,
+                        fontWeight: 700
+                    }}>
                         Empowering Adaptive Care with AI
                     </h1>
-                    <p style={{ fontSize: 20, color: '#444', marginBottom: 28 }}>
+                    <p style={{
+                        fontSize: 'clamp(16px, 4vw, 20px)',
+                        color: '#444',
+                        marginBottom: 28
+                    }}>
                         Personalized medical information and adaptive care recommendations for everyone. Discover how AI can support your health journey.
                     </p>
                     <button
@@ -91,13 +116,23 @@ const MainPage = () => {
                             fontWeight: 600,
                             cursor: 'pointer',
                             boxShadow: '0 2px 8px rgba(25,118,210,0.08)',
+                            width: '100%',
+                            maxWidth: 260,
                         }}
-                        onClick={()=>navigate("/symptoms")}
+                        onClick={() => navigate("/symptoms")}
                     >
                         Get Started
                     </button>
                 </div>
-                <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+                <div
+                    style={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        minWidth: 260,
+                        marginBottom: '24px',
+                    }}
+                >
                     <AIDaptCard
                         name="How to Use AIDaptCare"
                         info={
@@ -144,6 +179,47 @@ const MainPage = () => {
             >
                 &copy; {new Date().getFullYear()} AIDaptCare. All rights reserved.
             </footer>
+            {/* Responsive styles */}
+            <style>
+                {`
+                @media (max-width: 800px) {
+                    header > div, section {
+                        flex-direction: column !important;
+                        padding: 18px !important;
+                    }
+                    header > div {
+                        align-items: flex-start !important;
+                        padding: 0 12px !important;
+                    }
+                    nav {
+                        margin-top: 12px;
+                        width: 100%;
+                        justify-content: flex-start !important;
+                    }
+                    section > div {
+                        padding-right: 0 !important;
+                        margin-bottom: 18px !important;
+                    }
+                }
+                @media (max-width: 500px) {
+                    header > div {
+                        font-size: 20px !important;
+                        padding: 0 6px !important;
+                    }
+                    section {
+                        border-radius: 10px !important;
+                        padding: 8px !important;
+                    }
+                    h1 {
+                        font-size: 24px !important;
+                    }
+                    button {
+                        font-size: 16px !important;
+                        padding: 10px 18px !important;
+                    }
+                }
+                `}
+            </style>
         </div>
     );
 };
